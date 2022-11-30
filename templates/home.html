@@ -1,13 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="static/styles.css">
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-<body>
-    <h1>YOUR NAME GOES HERE</h1>
-    <h4><a href='/login'>Login</a></h4>
-    <h4><a href='/register'>Register</a></h4>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Home{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<h2 id="welcome-header">Welcome Normie!</h2>
+
+<h4><a href='/login'>Login</a></h4>
+<h4><a href='/register'>Register</a></h4>
+
+<p>
+    Go home over <a href="/home">here</a> ya normie!
+</p>
+{% endblock %}

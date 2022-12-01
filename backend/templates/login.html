@@ -1,34 +1,23 @@
 {% extends 'base.html' %}
+{% block title %} Login {% endblock %}
 
 {% block content %}
-<h1>{% block title %}Log In{% endblock %}</h1>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="static/styles.css">
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-
 <form action="/user" method="post">
     <label for="email">Email:</label>
     <br>
     <input type="text" id="email" name="email">
-    <br>
+    <br><br>
     <label for="password">Password:</label>
     <br>
     <input type="password" id="password" name="password">
-    <br>
+    <br><br>
     <input type="submit" value="Sign In">
 </form>
-
+<br>
 <p>
-    Don't have an account. LOL! Sign up <a href="/register">here</a> loser!
+    Don't have an account. LOL! Register <a href="/register">here</a> loser!
 </p>
 <p>
     Go home over <a href="/home">here</a> king!
 </p>
-</body>
-</html>
 {% endblock %}

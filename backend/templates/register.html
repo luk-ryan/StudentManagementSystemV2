@@ -1,42 +1,31 @@
 {% extends 'base.html' %}
+{% block title %} Register {% endblock %}
 
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="static/styles.css">
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-
 <form action="/user" method="post">
     <label for="fName">First Name:</label>
     <br>
     <input type="text" id="fName" name="fName">
-    <br>
+    <br><br>
     <label for="lName">Last Name:</label>
     <br>
     <input type="text" id="lName" name="lName">
-    <br>
+    <br><br>
     <label for="email">Email:</label>
     <br>
     <input type="text" id="email" name="email">
-    <br>
+    <br><br>
     <label for="password">Password:</label>
     <br>
     <input type="password" id="password" name="password">
-    <br>
+    <br><br>
     <input type="submit" value="Submit">
 </form>
-
+<br>
 <p>
     Already have an account? No LOL! Sign in <a href="/login">here</a> winner!
 </p>
 <p>
     Go home over <a href="/home">here</a> king!
 </p>
-
-</body>
-</html>
 {% endblock %}

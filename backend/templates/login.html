@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <h2>{{msg}}</h2>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<form action="#" method="post">
+    <label for="email">Email:</label>
+    <br>
+    <input type="text" id="email" name="email">
+    <br><br>
+    <label for="password">Password:</label>
+    <br>
+    <input type="password" id="password" name="password">
+    <br><br>
+    <input type="submit" value="Login">
+</form>
+<br>
+<p>
+    Don't have an account. LOL! Register <a href="/register">here</a> loser!
+</p>
+<p>
+    Go home over <a href="/home">here</a> king!
+</p>
+{% endblock %}

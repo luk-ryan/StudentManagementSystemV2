@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Student{% endblock %}
+
+{% block content %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <h2>{{msg}}</h2>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+<h1>{{student}} Home Page</h1>
+
+
+{% endblock %}

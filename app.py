@@ -7,7 +7,7 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 @app.route("/")
 def hello_world():
-    return "<p>Hello, World!</p>"
+    return render_template("home.html")
 
 @app.route("/login")
 def login():

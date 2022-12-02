@@ -9,8 +9,8 @@
     --info-color-border: #054d7a;
     --warning-color-border: #808000;
     --error-color-border: #800013;
-    --text-color: #111111;
-    --background-color: #f8f7ed;
+    --text-color: #000;
+    --background-color: #fff;
     --heading-font-family: sans-serif;
     --paragraph-font-family: sans-serif;
     --heading-font-size: 2em;

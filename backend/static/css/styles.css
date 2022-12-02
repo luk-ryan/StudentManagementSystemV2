@@ -5,11 +5,10 @@
     --info-color: lightskyblue;
     --warning-color: lightyellow;
     --error-color: lightpink;
-    --accent-color: gold;
     --success-color-border: #116e11;
-    --info-color: lightskyblue;
-    --warning-color: lightyellow;
-    --error-color: lightpink;
+    --info-color-border: #054d7a;
+    --warning-color-border: #808000;
+    --error-color-border: #800013;
     --text-color: #111111;
     --background-color: #f8f7ed;
     --heading-font-family: sans-serif;
@@ -24,6 +23,8 @@
 }
 
 body {
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-family: var(--paragraph-font-family);
     font-size: var(--paragraph-font-size);
 }

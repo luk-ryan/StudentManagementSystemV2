@@ -6,12 +6,12 @@
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
-                <h2>{{msg}}</h2>
+                <p class="block flash-message">{{msg}}</p>
             {% endfor %}
         {% endif %}
     {% endwith %}
 
-<div class="login-register-form">
+<div class="block login-register-form">
     <form action="#" method="post">
         <label for="email">Email</label>
         <input type="text" id="email" name="email">

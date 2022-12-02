@@ -5,6 +5,11 @@
     --info-color: lightskyblue;
     --warning-color: lightyellow;
     --error-color: lightpink;
+    --accent-color: gold;
+    --success-color-border: #116e11;
+    --info-color: lightskyblue;
+    --warning-color: lightyellow;
+    --error-color: lightpink;
     --text-color: #111111;
     --background-color: #f8f7ed;
     --heading-font-family: sans-serif;
@@ -96,12 +101,6 @@ body {
     margin-top: 150px;
 }
 
-.login-register-form {
-    display: block;
-    width: 75%;
-    margin: auto;
-}
-
 .login-register-form form {
     width: 100%;
 }
@@ -132,4 +131,22 @@ body {
 .login-register-form button:hover {
     filter: brightness(1.3);
     cursor: pointer;
+}
+
+.block {
+    display: block;
+    max-width: 992px;
+    margin: auto;
+}
+
+.flash-message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-left-style: solid;
+    border-left-width: 8px;
+    border-left-color: var(--success-color-border);
+    border-radius: 5px;
+    background-color: var(--success-color);
+    font-family: var(--paragraph-font-family);
+    font-size: var(--subheading-font-size);
 }

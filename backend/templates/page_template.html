@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="static/css/styles.css">
         <title>{% block title %}{% endblock title %}</title>
     </head>
-    <body>
+    <body onload="loadTheme()">
         <nav id="top-navbar">
             <div id="top-navbar-logo">
                 <a href="/">
@@ -30,7 +30,9 @@
                         </li>
                     {% endif %}
                     <li onclick="toggleTheme()">
-                        <span>Toggle Theme</span>
+                        <span>
+                            <img id="toggleThemeImg" height="25px">
+                        </span>
                     </li>
                 </ul>
             </div>
@@ -38,6 +40,6 @@
         <div id="main-content">
             {% block content %}{% endblock content %}
         </div>
-        <script src="static/js/toggleTheme.js"></script>
+        <script src="static/js/handleTheme.js"></script>
     </body>
 </html>

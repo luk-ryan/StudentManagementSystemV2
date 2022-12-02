@@ -9,6 +9,10 @@
     --info-color-border: #054d7a;
     --warning-color-border: #808000;
     --error-color-border: #800013;
+    --light-theme-text-color: #000;
+    --light-theme-background-color: #fff;
+    --dark-theme-text-color: #fff;
+    --dark-theme-background-color: #000;
     --text-color: #000;
     --background-color: #fff;
     --heading-font-family: sans-serif;

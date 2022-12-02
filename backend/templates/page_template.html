@@ -7,6 +7,27 @@
         <title>{% block title %}{% endblock title %}</title>
     </head>
     <body>
-        {% block content %}{% endblock content %}
+        <nav id="top-navbar">
+            <div id="top-navbar-logo">
+                <a href="/">
+                    <img src="static/images/logo.png">
+                </a>
+                <a href="/">
+                    <p>Student Management System v2.0</p>
+                </a>
+            </div>
+                <ul id="top-navbar-links">
+                    <li>
+                        <a href="/login">Login</a>
+                    </li>
+                    <li>
+                        <a href="/register">Register</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="main-content">
+            {% block content %}{% endblock content %}
+        </div>
     </body>
 </html>

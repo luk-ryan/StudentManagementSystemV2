@@ -9,8 +9,8 @@
     --background-color: #f8f7ed;
     --heading-font-family: sans-serif;
     --paragraph-font-family: sans-serif;
-    --heading-font-size: 3em;
-    --subheading-font-size: 2em;
+    --heading-font-size: 2em;
+    --subheading-font-size: 1.5em;
     --paragraph-font-size: 1em;
 }
 
@@ -21,6 +21,79 @@
 body {
     font-family: var(--paragraph-font-family);
     font-size: var(--paragraph-font-size);
+}
+
+#top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--main-color);
+}
+
+#top-navbar-logo {
+    display: flex;
+    align-items: center;
+    padding-left: 50px;
+}
+
+#top-navbar-logo img {
+    height: 75px;
+    margin-right: 20px;
+}
+
+#top-navbar-logo a {
+    text-decoration: none;
+}
+
+#top-navbar-logo p {
+    font-family: var(--heading-font-family);
+    font-size: var(--subheading-font-size);
+    font-weight: bold;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+#top-navbar-links {
+    display: flex;
+    list-style-type: none;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    align-items: stretch;
+}
+
+#top-navbar-links > li {
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+#top-navbar-links > li:hover {
+    filter: brightness(1.3);
+    cursor: pointer;
+}
+
+#top-navbar-links a {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--heading-font-family);
+    font-size: var(--paragraph-font-size);
+    color: var(--accent-color);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#main-content {
+    margin-top: 150px;
 }
 
 .login-register-form {

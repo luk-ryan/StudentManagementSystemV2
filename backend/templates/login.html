@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'page_template.html' %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
@@ -6,22 +6,20 @@
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
-                <h2>{{msg}}</h2>
+                <p class="block flash-message">{{msg}}</p>
             {% endfor %}
         {% endif %}
     {% endwith %}
 
-<form action="#" method="post">
-    <label for="email">Email:</label>
-    <br>
-    <input type="text" id="email" name="email">
-    <br><br>
-    <label for="password">Password:</label>
-    <br>
-    <input type="password" id="password" name="password">
-    <br><br>
-    <input type="submit" value="Login">
-</form>
+<div class="block login-register-form">
+    <form action="#" method="post">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Login</button>
+    </form>
+</div>
 <br>
 <p>
     Don't have an account. LOL! Register <a href="/register">here</a> loser!

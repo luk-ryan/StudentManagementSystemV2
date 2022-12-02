@@ -1,26 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'page_template.html' %}
 {% block title %}Register{% endblock %}
 
 {% block content %}
-<form action="#" method="post">
-    <label for="fName">First Name:</label>
-    <br>
-    <input type="text" id="fName" name="fName">
-    <br><br>
-    <label for="lName">Last Name:</label>
-    <br>
-    <input type="text" id="lName" name="lName">
-    <br><br>
-    <label for="email">Email:</label>
-    <br>
-    <input type="text" id="email" name="email">
-    <br><br>
-    <label for="password">Password:</label>
-    <br>
-    <input type="password" id="password" name="password">
-    <br><br>
-    <input type="submit" value="Submit">
-</form>
+<div class="block login-register-form">
+    <form action="#" method="post">
+        <label for="fName">First Name</label>
+        <input type="text" id="fName" name="fName">
+        <label for="lName">Last Name</label>
+        <input type="text" id="lName" name="lName">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Register</button>
+    </form>
+</div>
 <br>
 <p>
     Already have an account? No LOL! Sign in <a href="/login">here</a> winner!

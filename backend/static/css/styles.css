@@ -79,6 +79,9 @@ body {
     padding-right: 15px;
     background-color: var(--main-color);
     color: var(--accent-color);
+    font-family: var(--heading-font-family);
+    font-size: var(--paragraph-font-size);
+    font-weight: bold;
 }
 
 #top-navbar-links > li:hover {
@@ -86,15 +89,12 @@ body {
     cursor: pointer;
 }
 
-#top-navbar-links a {
+#top-navbar-links a, #top-navbar-links span {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: var(--heading-font-family);
-    font-size: var(--paragraph-font-size);
     color: var(--accent-color);
-    font-weight: bold;
     text-decoration: none;
 }
 

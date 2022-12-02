@@ -23,11 +23,15 @@
                     <li>
                         <a href="/register">Register</a>
                     </li>
+                    <li onclick="toggleTheme()">
+                        <span>Toggle Theme</span>
+                    </li>
                 </ul>
             </div>
         </nav>
         <div id="main-content">
             {% block content %}{% endblock content %}
         </div>
+        <script src="static/js/toggleTheme.js"></script>
     </body>
 </html>

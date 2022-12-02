@@ -17,12 +17,18 @@
                 </a>
             </div>
                 <ul id="top-navbar-links">
-                    <li>
-                        <a href="/login">Login</a>
-                    </li>
-                    <li>
-                        <a href="/register">Register</a>
-                    </li>
+                    {% if student is defined %}
+                        <li>
+                            <a href="/login">Logout</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/login">Login</a>
+                        </li>
+                        <li>
+                            <a href="/register">Register</a>
+                        </li>
+                    {% endif %}
                     <li onclick="toggleTheme()">
                         <span>Toggle Theme</span>
                     </li>

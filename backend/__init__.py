@@ -3,6 +3,12 @@ an init file is required for this folder to be considered as a module
 '''
 from flask import Flask
 import os
+from dotenv import load_dotenv
+
+
+dotenv_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '.env'))
+
+load_dotenv(dotenv_path)
 
 package_dir = os.path.dirname(
     os.path.abspath(__file__)
@@ -34,5 +40,6 @@ else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../db.sqlite'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = '69cae04b04756f65eabcd2c5a11c8c24'
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.app_context().push()

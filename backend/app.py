@@ -14,18 +14,18 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class accounts(db.Model):
-   _id = db.Column("id", db.Integer, primary_key = True)
-   firstName = db.Column(db.String(100))
-   lastName = db.Column(db.String(100))
-   fullName = db.Column(db.String(100))
-   email = db.Column(db.String(100), unique = True)
-   school = db.Column(db.String(100))
+    _id = db.Column("id", db.Integer, primary_key = True)
+    firstName = db.Column(db.String(100))
+    lastName = db.Column(db.String(100))
+    fullName = db.Column(db.String(100))
+    email = db.Column(db.String(100), unique = True)
+    school = db.Column(db.String(100))
 
-   def __init__(self, firstName, lastName, email):
-      self.firstName = firstName
-      self.lastName = lastName
-    #   self.fullName = firstName, lastName
-      self.email = email
+    def __init__(self, firstName, lastName, email):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.fullName = firstName + " " + lastName
+        self.email = email
 
 # Directories for the home page
 @app.route("/")
@@ -49,14 +49,14 @@ def register():
         e = request.form["email"]
         session["name"] = first_name # stores the above field in session
         
-        # found = accounts.query.filter_by(email = e).first()
-        # if found:
-        #     session["email"] = e
+        found = accounts.query.filter_by(email = e).first()
+        if found:
+            session["email"] = e
 
-        # else:
-        # acc = accounts(first_name, last_name, e)
-        # db.session.add(acc)
-        # db.session.commit()
+        else:
+            acc = accounts(first_name, last_name, e)
+            db.session.add(acc)
+            db.session.commit()
 
         flash(f" Logged in Successfully!") # messaging tells user they have been logged in
         return redirect(url_for("student")) # redirects to student page
@@ -97,5 +97,6 @@ def view():
     return render_template("view.html", values = accounts.query.all())
 
 if __name__ == "__main__":
-    db.create_all()
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

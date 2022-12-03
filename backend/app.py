@@ -27,20 +27,34 @@ class accounts(db.Model):
         self.fullName = firstName + " " + lastName
         self.email = email
 
-# Directories for the home page
+
 @app.route("/")
 @app.route("/home")
 def home():
+
+    '''
+    Directories for the home page
+    '''
+
     return render_template("home.html")
 
-# Directory for login page
+
 @app.route("/login")
 def login():
+
+    '''
+    Directory for login page
+    '''
+
     return render_template("login.html")
 
-# Directory for register page
+
 @app.route("/register", methods = ["POST","GET"])
 def register():
+
+    '''
+    Directory for register page
+    '''
 
     # When the user clicks the submit button, it will post it back to /register page
     if request.method == "POST":
@@ -65,9 +79,13 @@ def register():
     else:
         return render_template("register.html")
 
-# Directory for the Student page
+
 @app.route("/student")
 def student():
+    
+    '''
+    Directory for the Student page
+    '''
 
     # this is the default Student home page once they log in
     if "name" in session:
@@ -79,9 +97,13 @@ def student():
         flash(f"You are not logged in")
         return redirect(url_for("login"))
 
-# Log out of a session
+
 @app.route("/logout")
 def logout():
+
+    '''
+    Log out of a session
+    '''
 
     # messaging to let user know they have been logged out
     if "name" in session:
@@ -92,9 +114,16 @@ def logout():
     session.pop("email", None)  
     return redirect(url_for("login"))
 
+
 @app.route("/view")
 def view():
+
+    '''
+    Testing purposes for visualizing database
+    '''
+    
     return render_template("view.html", values = accounts.query.all())
+
 
 if __name__ == "__main__":
     with app.app_context():

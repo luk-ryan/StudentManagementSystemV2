@@ -1,9 +1,16 @@
 from flask_sqlalchemy import SQLAlchemy
-from backend import app
+from app import app
 
 db = SQLAlchemy(app)
-class students(db.Model):
-   id = db.Column(db.Integer)
-   name = db.Column(db.String())
-   email = db.Column(db.String(), unique = True)
-   school = db.Column(db.String())
+
+class accounts(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    firstName = db.Column(db.String(100), nullable = False)
+    lastName = db.Column(db.String(100), nullable = False)
+    email = db.Column(db.String(100), unique = True, nullable = False)
+    school = db.Column(db.String(100))
+
+    def __init__(self, firstName, lastName, email):
+        self.firstName = firstName
+        self.lastName = lastName
+        self.email = email

@@ -18,13 +18,16 @@ class Student(db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
     school = db.Column(db.String(100))
 
+
     def __init__(self, firstName, lastName, email):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
 
+
     def __repr__(self):
         return '<Student %r>' % self.email
+
 
     def register(first, last, email):
 
@@ -41,3 +44,15 @@ class Student(db.Model):
             acc = Student(first, last, email)
             db.session.add(acc)
             db.session.commit()
+    
+
+    def login(email):
+
+        stud = Student.query.filter_by(email = email).first()
+
+        if not stud:
+            raise Exception("Email is either invalid or not registered in the system")
+        
+        fName = stud.firstName
+
+        return fName

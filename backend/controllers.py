@@ -71,10 +71,19 @@ def register_post():
     email = request.form["email"]
     session["name"] = first_name # stores the above field in session
 
-    
+    try:
+        Student.register(first_name, last_name, email)
+        flash(f"Logged in Successfully!") # messaging tells user they have been logged in
+        return redirect(url_for("student")) # redirects to student page
+    except:
+        flash(f"Invalid email")
+        return redirect(url_for("student"))
 
-    flash(f" Logged in Successfully!") # messaging tells user they have been logged in
-    return redirect(url_for("student")) # redirects to student page
+
+@app.route("/registerInvalid")
+def register_invalid():
+    return redirect(url_for("register_get"))
+
 
 
 @app.route("/student")
@@ -108,7 +117,7 @@ def logout():
         flash(f" {s} has been logged out Successfully", "info")
 
     session.pop("name", None)
-    session.pop("email", None)  
+    session.pop("email", None)
     return redirect(url_for("login"))
 
 

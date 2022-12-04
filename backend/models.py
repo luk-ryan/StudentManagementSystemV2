@@ -26,18 +26,18 @@ class Student(db.Model):
     def __repr__(self):
         return '<Student %r>' % self.email
 
-def register(first, last, email):
+    def register(first, last, email):
 
-    # check that email is valid
-    email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
-    +)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+\
-    /-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])")
+        # check that email is valid
+        email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
+        +)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+\
+        /-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])")
 
-    if not re.match(email_regex, email):
-        return None
+        if not re.match(email_regex, email):
+            raise Exception("Invalid Email")
 
-    found = Student.query.filter_by(email = email).first()
-    if not found:   
-        acc = Student(first, last, email)
-        db.session.add(acc)
-        db.session.commit()
+        found = Student.query.filter_by(email = email).first()
+        if not found: 
+            acc = Student(first, last, email)
+            db.session.add(acc)
+            db.session.commit()

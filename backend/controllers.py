@@ -69,15 +69,15 @@ def register_post():
     first_name = request.form["fName"] # temporary stores first name field
     last_name = request.form["lName"]
     email = request.form["email"]
-    session["name"] = first_name # stores the above field in session
 
     try:
         Student.register(first_name, last_name, email)
+        session["name"] = first_name # stores the above field in session
         flash(f"Logged in Successfully!") # messaging tells user they have been logged in
         return redirect(url_for("student")) # redirects to student page
     except:
         flash(f"Invalid email")
-        return redirect(url_for("student"))
+        return render_template('register.html', message='')
 
 
 @app.route("/registerInvalid")

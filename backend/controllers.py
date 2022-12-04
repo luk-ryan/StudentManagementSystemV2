@@ -91,17 +91,16 @@ def register_post():
 
     try:
         Student.register(first_name, last_name, email)
-        flash(f"You have been successfully registered! Please login with your email") # messaging tells user they have been logged in
+        flash(f"You have been successfully registered! Please login with your email", "success") # messaging tells user they have been logged in
         return redirect(url_for("login_get")) # redirects to student page
-    except:
-        flash(f"Invalid email")
-        return redirect(url_for("student"))
+    except Exception as err:
+        flash(f"{str(err)}", "error")
+        return render_template('register.html', message='')
 
 
 @app.route("/registerInvalid")
 def register_invalid():
     return redirect(url_for("register_get"))
-
 
 
 @app.route("/student")
@@ -119,7 +118,7 @@ def student():
     # redirects back to login if they are not logged in the session
     else:
         flash(f"You are not logged in")
-        return redirect(url_for("login_get"))
+        return redirect(url_for("login"))
 
 
 @app.route("/logout")

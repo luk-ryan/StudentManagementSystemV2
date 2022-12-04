@@ -12,7 +12,7 @@
     --light-theme-text-color: #000;
     --light-theme-background-color: #fff;
     --dark-theme-text-color: #fff;
-    --dark-theme-background-color: #000;
+    --dark-theme-background-color: rgb(69, 69, 75);
     --text-color: #000;
     --background-color: #fff;
     --heading-font-family: sans-serif;
@@ -149,9 +149,27 @@ body {
     margin-bottom: 15px;
     border-left-style: solid;
     border-left-width: 8px;
-    border-left-color: var(--success-color-border);
     border-radius: 5px;
-    background-color: var(--success-color);
     font-family: var(--paragraph-font-family);
     font-size: var(--subheading-font-size);
+}
+
+.flash-message.success {
+    border-left-color: var(--success-color-border);
+    background-color: var(--success-color);
+}
+
+.flash-message.info {
+    border-left-color: var(--info-color-border);
+    background-color: var(--info-color);
+}
+
+.flash-message.warning {
+    border-left-color: var(--warning-color-border);
+    background-color: var(--warning-color);
+}
+
+.flash-message.error {
+    border-left-color: var(--error-color-border);
+    background-color: var(--error-color);
 }

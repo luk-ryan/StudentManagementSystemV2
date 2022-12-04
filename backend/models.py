@@ -18,26 +18,41 @@ class Student(db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
     school = db.Column(db.String(100))
 
+
     def __init__(self, firstName, lastName, email):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
 
+
     def __repr__(self):
         return '<Student %r>' % self.email
 
-def register(first, last, email):
 
-    # check that email is valid
-    email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
-    +)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+\
-    /-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])")
+    def register(first, last, email):
 
-    if not re.match(email_regex, email):
-        return None
+        # check that email is valid
+        email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
+        +)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+\
+        /-9=?A-Z^-~]+)*|\[[\t -Z^-~]*])")
 
-    found = Student.query.filter_by(email = email).first()
-    if not found:   
-        acc = Student(first, last, email)
-        db.session.add(acc)
-        db.session.commit()
+        if not re.match(email_regex, email):
+            raise Exception("Invalid Email")
+
+        found = Student.query.filter_by(email = email).first()
+        if not found: 
+            acc = Student(first, last, email)
+            db.session.add(acc)
+            db.session.commit()
+    
+
+    def login(email):
+
+        stud = Student.query.filter_by(email = email).first()
+
+        if not stud:
+            raise Exception("Email is either invalid or not registered in the system")
+        
+        fName = stud.firstName
+
+        return fName

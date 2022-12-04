@@ -49,14 +49,33 @@ def home():
     return render_template("home.html")
 
 
-@app.route("/login")
-def login():
+@app.route("/login", methods = ["GET"])
+def login_get():
 
     '''
     Directory for login page
     '''
 
     return render_template("login.html")
+
+
+@app.route("/login", methods = ["POST"])
+def login_post():
+
+    '''
+    Directory for login page
+    '''
+    email = request.form["email"]
+    
+    try:
+        name = Student.login(email)
+        session["name"] =  name # stores the above field in session
+        flash(f"Logged in Successfully!") # messaging tells user they have been logged in
+        return redirect(url_for("student")) # redirects to student page
+    except Exception as error:
+        
+        flash(error) # messaging tells user they have been logged in
+        return render_template("login.html")
 
 
 @app.route('/register', methods=['GET'])
@@ -69,12 +88,19 @@ def register_post():
     first_name = request.form["fName"] # temporary stores first name field
     last_name = request.form["lName"]
     email = request.form["email"]
-    session["name"] = first_name # stores the above field in session
 
-    
+    try:
+        Student.register(first_name, last_name, email)
+        flash(f"You have been successfully registered! Please login with your email", "success") # messaging tells user they have been logged in
+        return redirect(url_for("login_get")) # redirects to student page
+    except Exception as err:
+        flash(f"{str(err)}", "error")
+        return render_template('register.html', message='')
 
-    flash(f" Logged in Successfully!") # messaging tells user they have been logged in
-    return redirect(url_for("student")) # redirects to student page
+
+@app.route("/registerInvalid")
+def register_invalid():
+    return redirect(url_for("register_get"))
 
 
 @app.route("/student")
@@ -108,8 +134,8 @@ def logout():
         flash(f" {s} has been logged out Successfully", "info")
 
     session.pop("name", None)
-    session.pop("email", None)  
-    return redirect(url_for("login"))
+    session.pop("email", None)
+    return redirect(url_for("login_get"))
 
 
 @app.route("/view")

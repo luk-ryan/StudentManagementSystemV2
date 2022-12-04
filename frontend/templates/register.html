@@ -2,34 +2,31 @@
 {% block title %}Register{% endblock %}
 
 {% block content %}
-
-{% with messages = get_flashed_messages() %}
-    {% if messages %}
-        {% for msg in messages %}
-            <p class="block flash-message">{{msg}}</p>
-        {% endfor %}
-    {% endif %}
-{% endwith %}
-
-<div class="block login-register-form">
-    <form action="#" method="post">
-        <label for="fName">First Name</label>
-        <input type="text" id="fName" name="fName">
-        <label for="lName">Last Name</label>
-        <input type="text" id="lName" name="lName">
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Register</button>
-    </form>
-</div>
-<br>
-<p>
-    Already have an account? No LOL! Sign in <a href="/login">here</a> winner!
-</p>
-<p>
-    Go home over <a href="/home">here</a> king!
-</p>
-
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for cat, msg in messages %}
+                <p class="block flash-message {{cat}}">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div class="block login-register-form">
+        <form action="#" method="post">
+            <label for="fName">First Name</label>
+            <input type="text" id="fName" name="fName">
+            <label for="lName">Last Name</label>
+            <input type="text" id="lName" name="lName">
+            <label for="email">Email</label>
+            <input type="text" id="email" name="email">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password">
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <br>
+    <p>
+        Already have an account? No LOL! Sign in <a href="/login">here</a> winner!
+    </p>
+    <p>
+        Go home over <a href="/home">here</a> king!
+    </p>
 {% endblock content %}

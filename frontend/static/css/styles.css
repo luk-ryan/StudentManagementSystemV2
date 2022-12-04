@@ -12,7 +12,7 @@
     --light-theme-text-color: #000;
     --light-theme-background-color: #fff;
     --dark-theme-text-color: #fff;
-    --dark-theme-background-color: #000;
+    --dark-theme-background-color: rgb(69, 69, 75);
     --text-color: #000;
     --background-color: #fff;
     --heading-font-family: sans-serif;

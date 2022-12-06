@@ -1,3 +1,12 @@
+# Python compiled bytecode output
 __pycache__/
-venv/
+*.pyc
+
+# Evironment variables
 backend/.env
+
+# Virtual environment
+venv/
+
+# IDE configurations
+.vscode/

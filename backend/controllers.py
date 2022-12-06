@@ -70,11 +70,11 @@ def login_post():
     try:
         name = Student.login(email)
         session["name"] =  name # stores the above field in session
-        flash(f"Logged in Successfully!") # messaging tells user they have been logged in
+        flash(f"Logged in Successfully!", "info") # messaging tells user they have been logged in
         return redirect(url_for("student")) # redirects to student page
     except Exception as error:
         
-        flash(error) # messaging tells user they have been logged in
+        flash(str(error), "error") # messaging tells user they have been logged in
         return render_template("login.html")
 
 
@@ -117,7 +117,7 @@ def student():
     
     # redirects back to login if they are not logged in the session
     else:
-        flash(f"You are not logged in")
+        flash(f"You are not logged in", "error")
         return redirect(url_for("login"))
 
 

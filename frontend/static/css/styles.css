@@ -1,26 +1,107 @@
+/* ----- ----- ----- Variable Definitions ----- ----- ----- */
+
+/* Font families and font sizes */
 :root {
-    --main-color: navy;
-    --accent-color: gold;
-    --success-color: lightgreen;
-    --info-color: lightskyblue;
-    --warning-color: lightyellow;
-    --error-color: lightpink;
-    --success-color-border: #116e11;
-    --info-color-border: #054d7a;
-    --warning-color-border: #808000;
-    --error-color-border: #800013;
-    --light-theme-text-color: #000;
-    --light-theme-background-color: #fff;
-    --dark-theme-text-color: #fff;
-    --dark-theme-background-color: rgb(69, 69, 75);
-    --text-color: #000;
-    --background-color: #fff;
     --heading-font-family: sans-serif;
     --paragraph-font-family: sans-serif;
     --heading-font-size: 2em;
     --subheading-font-size: 1.5em;
     --paragraph-font-size: 1em;
 }
+
+/*
+ * Light theme colors.
+ *
+ * Change these values to change the light theme color scheme.
+ */
+:root {
+    --light-theme-main-color: navy;
+    --light-theme-accent-color: gold;
+
+    --light-theme-text-color: #000;
+    --light-theme-background-color: #fff;
+
+    --light-theme-success-color: lightgreen;
+    --light-theme-success-color-border: #116e11;
+    --light-theme-info-color: lightskyblue;
+    --light-theme-info-color-border: #054d7a;
+    --light-theme-warning-color: lightyellow;
+    --light-theme-warning-color-border: #808000;
+    --light-theme-error-color: lightpink;
+    --light-theme-error-color-border: #800013;
+}
+
+/*
+ * Dark theme colors.
+ *
+ * Change these values to change the dark theme color scheme.
+ */
+:root {
+    --dark-theme-main-color: navy;
+    --dark-theme-accent-color: gold;
+
+    --dark-theme-text-color: #fff;
+    --dark-theme-background-color: rgb(69, 69, 75);
+
+    --dark-theme-success-color: lightgreen;
+    --dark-theme-success-color-border: #116e11;
+    --dark-theme-info-color: lightskyblue;
+    --dark-theme-info-color-border: #054d7a;
+    --dark-theme-warning-color: lightyellow;
+    --dark-theme-warning-color-border: #808000;
+    --dark-theme-error-color: lightpink;
+    --dark-theme-error-color-border: #800013;
+}
+
+/*
+ * If light theme is being used, this will apply the light theme colors to the
+ * main variables.
+ *
+ * Do not change this to change the light theme color scheme. To change the
+ * light theme color scheme, see above.
+ */
+:root, :root.light-theme {
+    --main-color: var(--light-theme-main-color);
+    --accent-color: var(--light-theme-accent-color);
+
+    --text-color: var(--light-theme-text-color);
+    --background-color: var(--light-theme-background-color);
+
+    --success-color: var(--light-theme-success-color);
+    --success-color-border: var(--light-theme-success-color-border);
+    --info-color: var(--light-theme-info-color);
+    --info-color-border: var(--light-theme-info-color-border);
+    --warning-color: var(--light-theme-warning-color);
+    --warning-color-border: var(--light-theme-warning-color-border);
+    --error-color: var(--light-theme-error-color);
+    --error-color-border: var(--light-theme-success-error-border);
+}
+
+/*
+ * If dark theme is being used, this will apply the dark theme colors to the
+ * main variables.
+ *
+ * Do not change this to change the dark theme color scheme. To change the dark
+ * theme color scheme, see above.
+ */
+:root.dark-theme {
+    --main-color: var(--dark-theme-main-color);
+    --accent-color: var(--dark-theme-accent-color);
+
+    --text-color: var(--dark-theme-text-color);
+    --background-color: var(--dark-theme-background-color);
+
+    --success-color: var(--dark-theme-success-color);
+    --success-color-border: var(--dark-theme-success-color-border);
+    --info-color: var(--dark-theme-info-color);
+    --info-color-border: var(--dark-theme-info-color-border);
+    --warning-color: var(--dark-theme-warning-color);
+    --warning-color-border: var(--dark-theme-warning-color-border);
+    --error-color: var(--dark-theme-error-color);
+    --error-color-border: var(--dark-theme-success-error-border);
+}
+
+/* ----- ----- ----- Styles ----- ----- ----- */
 
 * {
     box-sizing: border-box;
@@ -31,6 +112,10 @@ body {
     color: var(--text-color);
     font-family: var(--paragraph-font-family);
     font-size: var(--paragraph-font-size);
+}
+
+p {
+    color: var(--color);
 }
 
 #top-navbar {

@@ -1,13 +1,13 @@
 {% extends 'page_template.html' %}
-{% block title %}Home{% endblock %}
-
+{% block title %}Home{% endblock title %}
 {% block content %}
-<h1 id="welcome-header">Welcome Normie!</h1>
-
-<h4><a href='/login'>Login</a></h4>
-<h4><a href='/register'>Register</a></h4>
-
-<p>
-    Go home over <a href="/home">here</a> ya normie!
-</p>
-{% endblock %}
+    <div id="welcome-page-content" class="block center-text">
+        <div>
+            <h1 id="welcome-header">Student Management System v2</h1>
+            <p>Track your courses and calculate your GPA</p>
+        </div>
+        <img src="/static/images/monkey-chalkboard.png" alt="A pixel art picture of a monkey doing math on a chalkboard" width="600px">
+        <a class="link-button" href='/register'>Register</a>
+        <p>Already have an account? Click here to <a class="link" href='/login'>log in</a>.</p>
+    </div>
+{% endblock content %}

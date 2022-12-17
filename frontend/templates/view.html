@@ -1,9 +1,0 @@
-{% extends 'page_template.html' %}
-{% block title %}View{% endblock %}
-
-{% block content %}
-    {% for item in values %}
-        <p>First Name: {{item.firstName}}, Last Name: {{item.lastName}}, Full Name: {{item.fullName}}, Email: {{item.email}}, School: {{item.school}}</p>
-    {% endfor %}
-
-{% endblock %}

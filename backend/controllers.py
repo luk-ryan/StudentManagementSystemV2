@@ -173,12 +173,11 @@ def course_post():
 
 
 @app.route("/course/<id>", methods = ["DELETE"])
-def course_delete():
+def course_delete(id):
 
     '''
     Directory for modifying course info
     '''
 
-    Student.removeCourse(request.view_args("id"))
-
-    return redirect(url_for("course_get"))
+    Student.removeCourse(request.view_args["id"])
+    return "success"

@@ -70,7 +70,7 @@ class Student(db.Model):
     
     def removeCourse(course_id):
         
-        Course.query.filter_by(id = course_id).delete()
+        Course.query.filter_by(_id = course_id).delete()
         db.session.commit()
 
 

@@ -89,6 +89,11 @@ class Course(db.Model):
         for ev in evaluations:
             print(ev)
 
+    def getCourses(student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        return Course.query.filter_by(studentId = student_id)
+
 
 class Evaluation(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)

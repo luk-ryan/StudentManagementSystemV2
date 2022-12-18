@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student
+from backend.models import Student, Course
 
 from backend import app
 
@@ -149,8 +149,9 @@ def course_get():
     '''
 
     if "NAME" in session:
-        return render_template("course.html")
-    
+        courses = Course.getCourses(session["EMAIL"])
+        return render_template("course.html", courses = courses)
+
     # redirects back to login if they are not logged in the session
     else:
         flash(f"You are not logged in", "error")
@@ -168,4 +169,4 @@ def course_post():
 
     Student.addCourse(course_code, course_name, session["EMAIL"])
 
-    return render_template("course.html")
+    return redirect(url_for("course_get"))

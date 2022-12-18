@@ -18,6 +18,7 @@ class Student(db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
     school = db.Column(db.String(100))
     gpa = db.Column(db.Float)
+    courses = db.relationship("Course", backref="student")
 
 
     def __init__(self, firstName, lastName, email):
@@ -45,7 +46,7 @@ class Student(db.Model):
             acc = Student(first, last, email)
             db.session.add(acc)
             db.session.commit()
-    
+
 
     def login(email):
 
@@ -58,19 +59,21 @@ class Student(db.Model):
 
         return fName
 
-    
-    def addCourse(code, name):
-        course = Course(code, name, Student._id)
+
+    def addCourse(course_code, course_name, student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        course = Course(course_code, course_name, student_id)
+
         db.session.add(course)
         db.session.commit()
-
 
 
 class Course(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     code = db.Column(db.String(100), nullable = False)
     name =  db.Column(db.String(100), nullable = False)
-    studentId = db.Column(db.Integer, nullable = False)
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     gradePoint = db.Column(db.Float)
 
 
@@ -82,9 +85,14 @@ class Course(db.Model):
 
     def calculate():
         evaluations = Evaluation.query.filter_by(courseId = id)
-        
+
         for ev in evaluations:
             print(ev)
+
+    def getCourses(student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        return Course.query.filter_by(studentId = student_id)
 
 
 class Evaluation(db.Model):

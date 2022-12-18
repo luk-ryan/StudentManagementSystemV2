@@ -18,7 +18,7 @@ class Student(db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
     school = db.Column(db.String(100))
     gpa = db.Column(db.Float)
-    courses = db.relationship("Course", backref="person")
+    courses = db.relationship("Course", backref="student")
 
 
     def __init__(self, firstName, lastName, email):

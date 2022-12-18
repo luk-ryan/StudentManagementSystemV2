@@ -67,6 +67,11 @@ class Student(db.Model):
 
         db.session.add(course)
         db.session.commit()
+    
+    def removeCourse(course_id):
+        
+        Course.query.filter_by(id = course_id).delete()
+        db.session.commit()
 
 
 class Course(db.Model):

@@ -170,3 +170,15 @@ def course_post():
     Student.addCourse(course_code, course_name, session["EMAIL"])
 
     return redirect(url_for("course_get"))
+
+
+@app.route("/course/<id>", methods = ["DELETE"])
+def course_delete():
+
+    '''
+    Directory for modifying course info
+    '''
+
+    Student.removeCourse(request.view_args("id"))
+
+    return redirect(url_for("course_get"))

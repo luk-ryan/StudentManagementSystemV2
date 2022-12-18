@@ -10,8 +10,10 @@
     {% endwith %}
     {% if courses is defined %}
         {% for course in courses %}
-            <p><b>{{course.code}}</b> {{course.name}}</p>
-            <button onclick={{"removeCourse(" + course._id|string + ")"}}> Trash Can </button>
+            <div>
+                <p><b>{{course.code}}</b> {{course.name}}</p>
+                <button onclick="removeCourse(this, '{{ course._id }}' )">Trash Can </button>
+            </div>
         {% endfor %}
     {% endif %}
     <div class="block course-add-form">

@@ -180,4 +180,5 @@ def course_delete(id):
     '''
 
     Student.removeCourse(request.view_args["id"])
+
     return "success"

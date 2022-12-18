@@ -150,7 +150,7 @@ def course_get():
 
     if "NAME" in session:
         courses = Course.getCourses(session["EMAIL"])
-        return render_template("course.html", courses = courses)
+        return render_template("course.html", student = session["NAME"], courses = courses)
 
     # redirects back to login if they are not logged in the session
     else:

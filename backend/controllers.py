@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student
+from backend.models import Student, Course
 
 from backend import app
 
@@ -138,7 +138,7 @@ def student():
     # redirects back to login if they are not logged in the session
     else:
         flash(f"You are not logged in", "error")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_get"))
 
 
 @app.route("/course", methods = ["GET"])
@@ -149,12 +149,13 @@ def course_get():
     '''
 
     if "NAME" in session:
-        return render_template("course.html")
-    
+        courses = Course.getCourses(session["EMAIL"])
+        return render_template("course.html", student = session["NAME"], courses = courses)
+
     # redirects back to login if they are not logged in the session
     else:
         flash(f"You are not logged in", "error")
-        return redirect(url_for("login"))
+        return redirect(url_for("login_get"))
 
 
 @app.route("/course", methods = ["POST"])
@@ -163,12 +164,9 @@ def course_post():
     '''
     Directory for modifying course info
     '''
-    return render_template("course.html")
-    
-    # if "NAME" in session:
-    #     return render_template("course.html")
-    
-    # # redirects back to login if they are not logged in the session
-    # else:
-    #     flash(f"You are not logged in", "error")
-    #     return redirect(url_for("login"))
+    course_code = request.form["course code"]
+    course_name = request.form["course name"]
+
+    Student.addCourse(course_code, course_name, session["EMAIL"])
+
+    return redirect(url_for("course_get"))

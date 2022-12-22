@@ -70,7 +70,9 @@ class Student(db.Model):
     
     def removeCourse(course_id):
         
-        Course.query.filter_by(_id = course_id).delete()
+        trashed_course = Course.query.filter_by(_id = course_id).first()
+        trashed_course.trashed = True
+        #Course.query.filter_by(_id = course_id).delete()
         db.session.commit()
 
 
@@ -80,6 +82,7 @@ class Course(db.Model):
     name =  db.Column(db.String(100), nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     gradePoint = db.Column(db.Float)
+    trashed = db.Column(db.Boolean, default = False, nullable = False) 
 
 
     def __init__(self, code, name, studentId):
@@ -97,7 +100,7 @@ class Course(db.Model):
     def getCourses(student_email):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
-        return Course.query.filter_by(studentId = student_id)
+        return Course.query.filter_by(studentId = student_id, trashed = False)
 
 
 class Evaluation(db.Model):

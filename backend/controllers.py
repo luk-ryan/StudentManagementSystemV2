@@ -66,9 +66,10 @@ def login_post():
     Directory for login page
     '''
     email = request.form["email"]
+    password = request.form["password"]
     
     try:
-        student_info = Student.login(email)
+        student_info = Student.login(email, password)
         # session["ID"] = student_info[0]
         session["NAME"] =  student_info
         session["EMAIL"] =  email
@@ -91,9 +92,10 @@ def register_post():
     first_name = request.form["fName"] # temporary stores first name field
     last_name = request.form["lName"]
     email = request.form["email"]
+    password = request.form["password"]
 
     try:
-        Student.register(first_name, last_name, email)
+        Student.register(first_name, last_name, email, password)
         flash(f"You have been successfully registered! Please login with your email", "success") # messaging tells user they have been logged in
         return redirect(url_for("login_get")) # redirects to student page
     except Exception as err:

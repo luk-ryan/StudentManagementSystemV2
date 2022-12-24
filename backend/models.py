@@ -1,6 +1,6 @@
 from http.client import REQUEST_HEADER_FIELDS_TOO_LARGE
 from flask_sqlalchemy import SQLAlchemy
-from backend import app
+from backend import app, bcrypt
 import re
 import email
 import datetime
@@ -16,22 +16,24 @@ class Student(db.Model):
     firstName = db.Column(db.String(100), nullable = False)
     lastName = db.Column(db.String(100), nullable = False)
     email = db.Column(db.String(100), unique = True, nullable = False)
+    password = db.Column(db.String(100), nullable = False)
     school = db.Column(db.String(100))
     gpa = db.Column(db.Float)
     courses = db.relationship("Course", backref="student")
 
 
-    def __init__(self, firstName, lastName, email):
+    def __init__(self, firstName, lastName, email, password):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
+        self.password = password
 
 
     def __repr__(self):
         return '<Student %r>' % self.email
 
 
-    def register(first, last, email):
+    def register(first, last, email, password):
 
         # check that email is valid
         email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
@@ -42,22 +44,27 @@ class Student(db.Model):
             raise Exception("Invalid Email")
 
         found = Student.query.filter_by(email = email).first()
-        if not found: 
-            acc = Student(first, last, email)
+        if not found:
+
+            hashed_password = bcrypt.generate_password_hash(password)
+            acc = Student(first, last, email, hashed_password)
             db.session.add(acc)
             db.session.commit()
 
 
-    def login(email):
+    def login(email, password):
 
-        stud = Student.query.filter_by(email = email).first()
+        student = Student.query.filter_by(email = email).first()
 
-        if not stud:
+        if not student:
             raise Exception("Email is either invalid or not registered in the system")
-        
-        fName = stud.firstName
 
+        if not bcrypt.check_password_hash(student.password, password): # returns False
+            raise Exception("Invalid Password")
+
+        fName = student.firstName
         return fName
+
 
 
     def addCourse(course_code, course_name, student_email):

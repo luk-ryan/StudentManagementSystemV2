@@ -110,6 +110,7 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 body {
@@ -118,10 +119,19 @@ body {
     color: var(--text-color);
     font-family: var(--paragraph-font-family);
     font-size: var(--paragraph-font-size);
+    height: 100%;
 }
 
 #main-content {
     margin-top: 150px;
+    min-height: 100%;
+    margin-bottom: -200px
+}
+
+#main-content:after {
+    content: "";
+    display: block;
+    height: 200px;
 }
 
 .block {
@@ -284,6 +294,8 @@ body {
 #footer {
     background-color: var(--main-color);
     color: var(--accent-color);
+    height: 200px;
+    margin-top: 50px;
     padding: 20px;
     padding-bottom: 5px;
 }
@@ -419,4 +431,41 @@ body {
 
 #final-welcome-prompt > p {
     margin-bottom: 25px;
+}
+
+#courses > h2 {
+    margin-bottom: 10px;
+}
+
+#course-list {
+    margin-bottom: 10px;
+}
+
+#course-list > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid var(--text-color);
+}
+
+#course-list > div:last-child {
+    border-bottom: 1px solid var(--text-color);
+}
+
+.light-theme #course-list .icon-button {
+    filter: invert(0);
+}
+
+#course-list .icon-button {
+    background-color: transparent;
+    border: none;
+    filter: invert(1);
+    cursor: pointer;
+}
+
+.course-add-form > form {
+    max-width: 750px;
+    margin: auto;
 }

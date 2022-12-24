@@ -5,6 +5,7 @@ from flask import Flask
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from flask_bcrypt import Bcrypt
 
 
 dotenv_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '.env'))
@@ -44,6 +45,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.app_context().push()
+
+bcrypt = Bcrypt(app)
 
 @app.context_processor
 def template_inject():

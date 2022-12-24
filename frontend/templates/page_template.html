@@ -19,6 +19,9 @@
                 <ul id="top-navbar-links">
                     {% if student is defined %}
                         <li>
+                            <a href="/course">Courses</a>
+                        </li>
+                        <li>
                             <a href="/logout">Logout</a>
                         </li>
                     {% else %}
@@ -58,5 +61,6 @@
             <p>&copy; {{ year }} Crongo Corp</p>
         </div>
         <script src="static/js/handleTheme.js"></script>
+        <script src="static/js/course.js"></script>
     </body>
 </html>

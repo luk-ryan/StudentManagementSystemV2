@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student
+from backend.models import Student, Course
 
 from backend import app
 
@@ -68,8 +68,11 @@ def login_post():
     email = request.form["email"]
     
     try:
-        name = Student.login(email)
-        session["name"] =  name # stores the above field in session
+        student_info = Student.login(email)
+        # session["ID"] = student_info[0]
+        session["NAME"] =  student_info
+        session["EMAIL"] =  email
+        # print (session["ID"])
         flash(f"Logged in Successfully!", "info") # messaging tells user they have been logged in
         return redirect(url_for("student")) # redirects to student page
     except Exception as error:
@@ -103,24 +106,6 @@ def register_invalid():
     return redirect(url_for("register_get"))
 
 
-@app.route("/student")
-def student():
-    
-    '''
-    Directory for the Student page
-    '''
-
-    # this is the default Student home page once they log in
-    if "name" in session:
-        s = session["name"]
-        return render_template("student.html", student = s)
-    
-    # redirects back to login if they are not logged in the session
-    else:
-        flash(f"You are not logged in", "error")
-        return redirect(url_for("login"))
-
-
 @app.route("/logout")
 def logout():
 
@@ -129,20 +114,71 @@ def logout():
     '''
 
     # messaging to let user know they have been logged out
-    if "name" in session:
-        s = session["name"]
-        flash(f" {s} has been logged out Successfully", "info")
+    if "NAME" in session:
+        name = session["NAME"]
+        flash(f" {name} has been logged out Successfully", "info")
 
-    session.pop("name", None)
-    session.pop("email", None)
+    session.pop("NAME", None)
+    session.pop("EMAIL", None)
     return redirect(url_for("login_get"))
 
 
-@app.route("/view")
-def view():
+@app.route("/student")
+def student():
+    
+    '''
+    Directory for the Student page
+    '''
+
+    # this is the default Student home page once they log in
+    if "NAME" in session:
+        name = session["NAME"]
+        return render_template("student.html", student = name)
+    
+    # redirects back to login if they are not logged in the session
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/course", methods = ["GET"])
+def course_get():
 
     '''
-    Testing purposes for visualizing database
+    Directory for modifying course info
     '''
-    
-    return render_template("view.html", values = Student.query.all())
+
+    if "NAME" in session:
+        courses = Course.getCourses(session["EMAIL"])
+        return render_template("course.html", student = session["NAME"], courses = courses)
+
+    # redirects back to login if they are not logged in the session
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/course", methods = ["POST"])
+def course_post():
+
+    '''
+    Directory for modifying course info
+    '''
+    course_code = request.form["course code"]
+    course_name = request.form["course name"]
+
+    Student.addCourse(course_code, course_name, session["EMAIL"])
+
+    return redirect(url_for("course_get"))
+
+
+@app.route("/course/<id>", methods = ["DELETE"])
+def course_delete(id):
+
+    '''
+    Directory for modifying course info
+    '''
+
+    Student.removeCourse(request.view_args["id"])
+
+    return "success"

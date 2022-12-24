@@ -17,6 +17,8 @@ class Student(db.Model):
     lastName = db.Column(db.String(100), nullable = False)
     email = db.Column(db.String(100), unique = True, nullable = False)
     school = db.Column(db.String(100))
+    gpa = db.Column(db.Float)
+    courses = db.relationship("Course", backref="student")
 
 
     def __init__(self, firstName, lastName, email):
@@ -44,7 +46,7 @@ class Student(db.Model):
             acc = Student(first, last, email)
             db.session.add(acc)
             db.session.commit()
-    
+
 
     def login(email):
 
@@ -56,3 +58,60 @@ class Student(db.Model):
         fName = stud.firstName
 
         return fName
+
+
+    def addCourse(course_code, course_name, student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        course = Course(course_code, course_name, student_id)
+
+        db.session.add(course)
+        db.session.commit()
+    
+    def removeCourse(course_id):
+        
+        trashed_course = Course.query.filter_by(_id = course_id).first()
+        trashed_course.trashed = True
+        #Course.query.filter_by(_id = course_id).delete()
+        db.session.commit()
+
+
+class Course(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    code = db.Column(db.String(100), nullable = False)
+    name =  db.Column(db.String(100), nullable = False)
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+    gradePoint = db.Column(db.Float)
+    trashed = db.Column(db.Boolean, default = False, nullable = False) 
+
+
+    def __init__(self, code, name, studentId):
+        self.code = code
+        self.name = name
+        self.studentId = studentId
+
+
+    def calculate():
+        evaluations = Evaluation.query.filter_by(courseId = id)
+
+        for ev in evaluations:
+            print(ev)
+
+    def getCourses(student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        return Course.query.filter_by(studentId = student_id, trashed = False)
+
+
+class Evaluation(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    name =  db.Column(db.String(100), nullable = False)
+    grade = db.Column(db.Float)
+    weight = db.Column(db.Float, nullable = False)
+    courseId = db.Column(db.Integer, nullable = False)
+
+    def __init__(self, name, grade, weight, courseId):
+        self.name = name
+        self.grade = grade/100
+        self.weight = weight/100
+        self.courseId = courseId

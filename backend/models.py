@@ -97,6 +97,9 @@ class Course(db.Model):
         self.name = name
         self.studentId = studentId
 
+    def getCourseById(id):
+        return Course.query.filter_by(_id = id, trashed = False).first()
+
 
     def calculate():
         evaluations = Evaluation.query.filter_by(courseId = id)

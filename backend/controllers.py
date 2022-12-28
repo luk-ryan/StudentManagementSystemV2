@@ -147,12 +147,12 @@ def student():
 def course_get():
 
     '''
-    Directory for modifying course info
+    Directory for viewing all courses
     '''
 
     if "NAME" in session:
         courses = Course.getCourses(session["EMAIL"])
-        return render_template("course.html", student = session["NAME"], courses = courses)
+        return render_template("courses.html", student = session["NAME"], courses = courses)
 
     # redirects back to login if they are not logged in the session
     else:
@@ -164,7 +164,7 @@ def course_get():
 def course_post():
 
     '''
-    Directory for modifying course info
+    Adding Course
     '''
     course_code = request.form["course code"]
     course_name = request.form["course name"]
@@ -178,9 +178,19 @@ def course_post():
 def course_delete(id):
 
     '''
-    Directory for modifying course info
+    Deleting course
     '''
 
     Student.removeCourse(request.view_args["id"])
 
     return "success"
+
+@app.route("/course/<id>", methods = ["GET"])
+def course_get_by_id(id):
+
+    '''
+    Directory for viewing individual course
+    '''
+
+
+    return render_template('course.html', course = Course.getCourseById(id))

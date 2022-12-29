@@ -17,7 +17,7 @@
  */
 :root {
     --light-theme-main-color: navy;
-    --light-theme-accent-color: gold;
+    --light-theme-accent-color: #e6b800;
 
     --light-theme-text-color: #000;
     --light-theme-background-color: #fff;
@@ -435,6 +435,11 @@ body {
 
 #courses > h2 {
     margin-bottom: 10px;
+    font-size: var(--title-font-size);
+}
+
+#course-list .link {
+    font-size: var(--subheading-font-size);
 }
 
 #course-list {

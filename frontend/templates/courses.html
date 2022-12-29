@@ -14,7 +14,7 @@
             <div id="course-list" class="block">
                 {% for course in courses %}
                     <div>
-                        <a href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
+                        <a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
                         <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
                             <img src="static/svg/trash.svg">
                         </button>

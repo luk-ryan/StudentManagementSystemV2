@@ -1,8 +1,6 @@
 {% extends 'page_template.html' %}
 {% block title %}{{course.code}}{% endblock %}
-
 {% block content %}
-
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for cat, msg in messages %}
@@ -10,8 +8,29 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
     <h1><b>{{course.code}}</b> {{course.name}}</h1>
-
-
+    <h2>Evaluations</h2>
+    {% if evaluations is defined %}
+        <div>
+            <table>
+                <tr>
+                <th>Evaluation</th>
+                <th>Grade</th>
+                <th>Weight</th>
+                </tr>
+                {% for evaluation in evaluations %}
+                    <tr>
+                        <td>{{ evaluation.name }}</td>
+                        <td>{{ evaluation.grade }}</td>
+                        <td>{{ evaluation.weight }}</td>
+                    </tr>
+                {% endfor %}
+                <tr>
+                    <td><input></td>
+                    <td><input></td>
+                    <td><input></td>
+                </tr>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}

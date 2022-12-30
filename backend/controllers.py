@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course
+from backend.models import Student, Course, Evaluation
 
 from backend import app
 
@@ -189,8 +189,37 @@ def course_delete(id):
 def course_get_by_id(id):
 
     '''
-    Directory for viewing individual course
+    Get course by id
     '''
 
+    course = Course.getCourseById(id)
+    evaluations = Evaluation.getEvaluations(course._id)
 
-    return render_template('course.html', course = Course.getCourseById(id))
+    if (len(evaluations) > 0):
+        return render_template(
+            'course.html',
+            course = course,
+            student = session["NAME"],
+            evaluations = evaluations
+        )
+    else:
+        return render_template (
+            'course.html',
+            course = course,
+            student = session["NAME"]
+        )
+
+@app.route("/evaluation", methods = ["POST"])
+def evaluation_post():
+
+    '''
+    Adding evaluation
+    '''
+    evaluation_name = request.form["evaluation_name"]
+    evaluation_grade = request.form["evaluation_grade"]
+    evaluation_weight = request.form["evaluation_weight"]
+    course_id = request.form["course_id"]
+
+    Course.addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
+
+    return "let's go!"

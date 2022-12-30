@@ -20,8 +20,8 @@
                 {% for evaluation in evaluations %}
                     <tr>
                         <td>{{ evaluation.name }}</td>
-                        <td>{{ evaluation.grade }}</td>
-                        <td>{{ evaluation.weight }}</td>
+                        <td>{{ evaluation.grade * 100 }} %</td>
+                        <td>{{ evaluation.weight * 100 }} %</td>
                     </tr>
                 {% endfor %}
                 <tr id="evaluation-input-row" style="display: none">

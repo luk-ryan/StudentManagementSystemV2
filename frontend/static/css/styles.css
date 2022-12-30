@@ -148,12 +148,10 @@ body {
     color: var(--accent-color);
     font-weight: bold;
     text-decoration-thickness: 2px;
-    transition: 0.5s;
 }
 
 .link:hover {
     text-decoration: none;
-    transition: 0.5s;
 }
 
 .link-button-1 {

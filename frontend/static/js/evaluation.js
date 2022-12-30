@@ -59,11 +59,11 @@ async function addEvaluation(id) {
 
             // Create cell for the evaluation grade
             const gradeCell = newEvaluationRow.insertCell();
-            gradeCell.appendChild(document.createTextNode(evaluation.evaluation_grade));
+            gradeCell.appendChild(document.createTextNode(`${evaluation.evaluation_grade * 100} %`));
 
             // Create cell for the evaluation weight
             const weightCell = newEvaluationRow.insertCell();
-            weightCell.appendChild(document.createTextNode(evaluation.evaluation_weight));
+            weightCell.appendChild(document.createTextNode(`${evaluation.evaluation_weight * 100} %`));
 
             // Insert before the last row (input row)
             inputRow.parentElement.insertBefore(newEvaluationRow, inputRow);

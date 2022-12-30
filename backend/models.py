@@ -118,6 +118,8 @@ class Course(db.Model):
         db.session.add(evaluation)
         db.session.commit()
 
+        return evaluation
+
 
 class Evaluation(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)

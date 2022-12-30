@@ -215,11 +215,18 @@ def evaluation_post():
     '''
     Adding evaluation
     '''
-    evaluation_name = request.form["evaluation_name"]
-    evaluation_grade = request.form["evaluation_grade"]
-    evaluation_weight = request.form["evaluation_weight"]
-    course_id = request.form["course_id"]
 
-    Course.addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
+    request.get_data()
 
-    return "let's go!"
+    evaluation_name = request.json["evaluation_name"]
+    evaluation_grade = request.json["evaluation_grade"]
+    evaluation_weight = request.json["evaluation_weight"]
+    course_id = request.json["course_id"]
+
+    evaluation = Course.addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
+
+    return {
+        "evaluation_name": evaluation.name,
+        "evaluation_grade": evaluation.grade,
+        "evaluation_weight": evaluation.weight
+    }

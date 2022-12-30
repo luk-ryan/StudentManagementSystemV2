@@ -10,13 +10,12 @@
     {% endwith %}
     <h1><b>{{course.code}}</b> {{course.name}}</h1>
     <h2>Evaluations</h2>
-    {% if evaluations is defined %}
         <div>
-            <table>
+            <table id="evaluations-table">
                 <tr>
-                <th>Evaluation</th>
-                <th>Grade</th>
-                <th>Weight</th>
+                    <th>Evaluation</th>
+                    <th>Grade</th>
+                    <th>Weight</th>
                 </tr>
                 {% for evaluation in evaluations %}
                     <tr>
@@ -25,12 +24,14 @@
                         <td>{{ evaluation.weight }}</td>
                     </tr>
                 {% endfor %}
-                <tr>
-                    <td><input></td>
-                    <td><input></td>
-                    <td><input></td>
+                <tr id="evaluation-input-row" style="display: none">
+                    <td><input id="evaluation_name" placeholder="Name"></td>
+                    <td><input id="evaluation_grade" placeholder="Grade"></td>
+                    <td><input id="evaluation_weight" placeholder="Weight"></td>
                 </tr>
             </table>
+            <button id="add-evaluation-button" style="display: none" onclick="addEvaluation( '{{ course._id }}' )">Add</button>
+            <button id="show-evaluation-button" onclick="showEvaluationInputRow()">+</button>
         </div>
-    {% endif %}
+    <script src="/static/js/evaluation.js"></script>
 {% endblock %}

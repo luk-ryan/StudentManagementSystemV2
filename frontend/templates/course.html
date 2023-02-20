@@ -23,14 +23,23 @@
             </div>
         </div>
     {% endif %}
-    <div class="block course-add-form">
-        <h2>Add New Course</h2>
-        <form action="/course" method="post">
-            <label for="course code">Course Code</label>
-            <input type="text" id="course code" name="course code">
-            <label for="course name">Course Name</label>
-            <input type="text" id="course name" name="course name">
-            <button type="submit">Add</button>
-        </form>
+    <h2>Add New Course</h2>
+    <button onclick="openAddCourseModal()">+</button>
+    <div id="course-add-modal">
+        <div>
+            <div>
+                <span onclick="closeAddCourseModal()">&times;</span>
+                <h2>Add New Course</h2>
+            </div>
+            <form action="/course" method="post">
+                <!-- <label for="course code">Course Code</label> -->
+                <input type="text" id="course code" name="course code" placeholder="Course Code">
+                <!-- <label for="course name">Course Name</label> -->
+                <br>
+                <input type="text" id="course name" name="course name" placeholder="Course Name">
+                <br>
+                <button type="submit">Add Course</button>
+            </form>
+        </div>
     </div>
 {% endblock content %}

@@ -19,3 +19,20 @@ async function removeCourse(element, id) {
         alert(err.message);
     }
 }
+
+function openAddCourseModal() {
+    const addCourseModal = document.getElementById("course-add-modal");
+    addCourseModal.style.display = "block";
+}
+
+function closeAddCourseModal() {
+    const addCourseModal = document.getElementById("course-add-modal");
+    addCourseModal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    const addCourseModal = document.getElementById("course-add-modal");
+    if (event.target == addCourseModal) {
+        closeAddCourseModal();
+    }
+}

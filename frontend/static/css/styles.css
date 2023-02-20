@@ -451,7 +451,7 @@ body {
 }
 
 #course-list > div:last-child {
-    border-bottom: 1px solid var(--text-color);
+    font-size: var(--subheading-font-size);
 }
 
 .light-theme #course-list .icon-button {

@@ -8,7 +8,7 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    {% if courses is defined %}
+    {% if courses is defined and courses|length > 0 %}
         <div id="courses">
             <h2 class="block">Courses</h2>
             <div id="course-list" class="block">
@@ -20,11 +20,27 @@
                         </button>
                     </div>
                 {% endfor %}
+                <div>
+                    <p>Add New Course</p>
+                    <button class="icon-button" onclick="openAddCourseModal()">
+                        <img src="static/svg/plus.svg">
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div id="courses">
+            <h2 class="block">No Courses Yet</h2>
+            <div id="course-list" class="block">
+                <div>
+                    <p>Add Your First Course</p>
+                    <button class="icon-button" onclick="openAddCourseModal()">
+                        <img src="static/svg/plus.svg">
+                    </button>
+                </div>
             </div>
         </div>
     {% endif %}
-    <h2>Add New Course</h2>
-    <button onclick="openAddCourseModal()">+</button>
     <div id="course-add-modal">
         <div>
             <div>

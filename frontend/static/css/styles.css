@@ -451,7 +451,7 @@ body {
 }
 
 #course-list > div:last-child {
-    border-bottom: 1px solid var(--text-color);
+    font-size: var(--subheading-font-size);
 }
 
 .light-theme #course-list .icon-button {
@@ -468,4 +468,91 @@ body {
 .course-add-form > form {
     max-width: 750px;
     margin: auto;
+}
+
+#course-add-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#course-add-modal > div {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    border-radius: 5px;
+    background-color: var(--background-color);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
+}
+
+#course-add-modal h2 {
+    text-align: center;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+#course-add-modal span {
+    color: var(--accent-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#course-add-modal span:hover {
+    filter: brightness(1.3);
+}
+
+#course-add-modal form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#course-add-modal input {
+    width: 75%;
+    height: 50px;
+    padding: 15px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-family: var(--paragraph-font-family);
+    font-size: var(--paragraph-font-size);
+}
+
+#course-add-modal input:first-child {
+    margin-bottom: 0;
+}
+
+#course-add-modal button {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+    padding: 15px;
+    background-color: var(--accent-color);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: var(--text-color);
+    font-size: var(--subheading-font-size);
+    font-weight: bold;
+}
+
+#course-add-modal button:hover {
+    filter: brightness(1.3);
 }

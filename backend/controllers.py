@@ -46,7 +46,10 @@ def home():
     Directories for the home page
     '''
 
-    return render_template("home.html")
+    if "NAME" in session:
+        return render_template("student.html", student=session["NAME"])
+    else:
+        return render_template("home.html")
 
 
 @app.route("/login", methods = ["GET"])

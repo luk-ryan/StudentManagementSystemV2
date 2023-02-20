@@ -128,24 +128,6 @@ def logout():
     return redirect(url_for("login_get"))
 
 
-@app.route("/student")
-def student():
-    
-    '''
-    Directory for the Student page
-    '''
-
-    # this is the default Student home page once they log in
-    if "NAME" in session:
-        name = session["NAME"]
-        return render_template("student.html", student = name)
-    
-    # redirects back to login if they are not logged in the session
-    else:
-        flash(f"You are not logged in", "error")
-        return redirect(url_for("login_get"))
-
-
 @app.route("/course", methods = ["GET"])
 def course_get():
 

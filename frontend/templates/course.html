@@ -1,8 +1,6 @@
 {% extends 'page_template.html' %}
 {% block title %}{{course.code}}{% endblock %}
-
 {% block content %}
-
     {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for cat, msg in messages %}
@@ -10,8 +8,30 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-
     <h1><b>{{course.code}}</b> {{course.name}}</h1>
-
-
+    <h2>Evaluations</h2>
+        <div>
+            <table id="evaluations-table">
+                <tr>
+                    <th>Evaluation</th>
+                    <th>Grade</th>
+                    <th>Weight</th>
+                </tr>
+                {% for evaluation in evaluations %}
+                    <tr>
+                        <td>{{ evaluation.name }}</td>
+                        <td>{{ evaluation.grade * 100 }} %</td>
+                        <td>{{ evaluation.weight * 100 }} %</td>
+                    </tr>
+                {% endfor %}
+                <tr id="evaluation-input-row" style="display: none">
+                    <td><input id="evaluation_name" placeholder="Name"></td>
+                    <td><input id="evaluation_grade" placeholder="Grade"></td>
+                    <td><input id="evaluation_weight" placeholder="Weight"></td>
+                </tr>
+            </table>
+            <button id="add-evaluation-button" style="display: none" onclick="addEvaluation( '{{ course._id }}' )">Add</button>
+            <button id="show-evaluation-button" onclick="showEvaluationInputRow()">+</button>
+        </div>
+    <script src="/static/js/evaluation.js"></script>
 {% endblock %}

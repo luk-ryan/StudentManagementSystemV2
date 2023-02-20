@@ -112,6 +112,14 @@ class Course(db.Model):
 
         return Course.query.filter_by(studentId = student_id, trashed = False)
 
+    def addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id):
+        evaluation = Evaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
+
+        db.session.add(evaluation)
+        db.session.commit()
+
+        return evaluation
+
 
 class Evaluation(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
@@ -122,6 +130,10 @@ class Evaluation(db.Model):
 
     def __init__(self, name, grade, weight, courseId):
         self.name = name
-        self.grade = grade/100
-        self.weight = weight/100
+        self.grade = float(grade) / 100
+        self.weight = float(weight) / 100
         self.courseId = courseId
+
+
+    def getEvaluations(course_id):
+        return Evaluation.query.filter_by(courseId = course_id).all()

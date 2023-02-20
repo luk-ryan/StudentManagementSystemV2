@@ -1,0 +1,36 @@
+{% extends 'page_template.html' %}
+{% block title %}Courses{% endblock title %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for cat, msg in messages %}
+                <p class="block flash-message {{cat}}">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% if courses is defined %}
+        <div id="courses">
+            <h2 class="block">Courses</h2>
+            <div id="course-list" class="block">
+                {% for course in courses %}
+                    <div>
+                        <a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
+                        <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
+                            <img src="static/svg/trash.svg">
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="block course-add-form">
+        <h2>Add New Course</h2>
+        <form action="/course" method="post">
+            <label for="course code">Course Code</label>
+            <input type="text" id="course code" name="course code">
+            <label for="course name">Course Name</label>
+            <input type="text" id="course name" name="course name">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+{% endblock content %}

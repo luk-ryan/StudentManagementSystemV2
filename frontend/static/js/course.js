@@ -20,11 +20,17 @@ async function removeCourse(element, id) {
     }
 }
 
+/**
+ * Opens the add course modal.
+ */
 function openAddCourseModal() {
     const addCourseModal = document.getElementById("course-add-modal");
     addCourseModal.style.display = "block";
 }
 
+/**
+ * Closes the add course modal.
+ */
 function closeAddCourseModal() {
     const addCourseModal = document.getElementById("course-add-modal");
     addCourseModal.style.display = "none";

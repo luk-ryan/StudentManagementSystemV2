@@ -78,7 +78,7 @@ def login_post():
         session["EMAIL"] =  email
         # print (session["ID"])
         flash(f"Logged in Successfully!", "info") # messaging tells user they have been logged in
-        return redirect(url_for("student")) # redirects to student page
+        return redirect(url_for("home")) # redirects to student page
     except Exception as error:
         
         flash(str(error), "error") # messaging tells user they have been logged in
@@ -137,7 +137,7 @@ def course_get():
 
     if "NAME" in session:
         courses = Course.getCourses(session["EMAIL"])
-        return render_template("course.html", student = session["NAME"], courses = list(courses))
+        return render_template("courses.html", student = session["NAME"], courses = list(courses))
 
     # redirects back to login if they are not logged in the session
     else:

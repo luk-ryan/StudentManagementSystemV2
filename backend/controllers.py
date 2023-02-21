@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course
+from backend.models import Student, Course, Evaluation
 
 from backend import app
 
@@ -132,7 +132,7 @@ def logout():
 def course_get():
 
     '''
-    Directory for modifying course info
+    Directory for viewing all courses
     '''
 
     if "NAME" in session:
@@ -149,7 +149,7 @@ def course_get():
 def course_post():
 
     '''
-    Directory for modifying course info
+    Adding Course
     '''
     course_code = request.form["course code"]
     course_name = request.form["course name"]
@@ -163,9 +163,55 @@ def course_post():
 def course_delete(id):
 
     '''
-    Directory for modifying course info
+    Deleting course
     '''
 
     Student.removeCourse(request.view_args["id"])
 
     return "success"
+
+@app.route("/course/<id>", methods = ["GET"])
+def course_get_by_id(id):
+
+    '''
+    Get course by id
+    '''
+
+    course = Course.getCourseById(id)
+    evaluations = Evaluation.getEvaluations(course._id)
+
+    if (len(evaluations) > 0):
+        return render_template(
+            'course.html',
+            course = course,
+            student = session["NAME"],
+            evaluations = evaluations
+        )
+    else:
+        return render_template (
+            'course.html',
+            course = course,
+            student = session["NAME"]
+        )
+
+@app.route("/evaluation", methods = ["POST"])
+def evaluation_post():
+
+    '''
+    Adding evaluation
+    '''
+
+    request.get_data()
+
+    evaluation_name = request.json["evaluation_name"]
+    evaluation_grade = request.json["evaluation_grade"]
+    evaluation_weight = request.json["evaluation_weight"]
+    course_id = request.json["course_id"]
+
+    evaluation = Course.addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
+
+    return {
+        "evaluation_name": evaluation.name,
+        "evaluation_grade": evaluation.grade,
+        "evaluation_weight": evaluation.weight
+    }

@@ -8,6 +8,7 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+
     <h1><b>{{course.code}}</b> {{course.name}}</h1>
     <h2>Evaluations</h2>
         <div>
@@ -35,3 +36,54 @@
         </div>
     <script src="/static/js/evaluation.js"></script>
 {% endblock %}
+
+    {% if courses is defined and courses|length > 0 %}
+        <div id="courses">
+            <h2 class="block">Courses</h2>
+            <div id="course-list" class="block">
+                {% for course in courses %}
+                    <div>
+                        <p><b>{{course.code}}</b> {{course.name}}</p>
+                        <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
+                            <img src="static/svg/trash.svg">
+                        </button>
+                    </div>
+                {% endfor %}
+                <div>
+                    <p>Add New Course</p>
+                    <button class="icon-button" onclick="openAddCourseModal()">
+                        <img src="static/svg/plus.svg">
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div id="courses">
+            <h2 class="block">No Courses Yet</h2>
+            <div id="course-list" class="block">
+                <div>
+                    <p>Add Your First Course</p>
+                    <button class="icon-button" onclick="openAddCourseModal()">
+                        <img src="static/svg/plus.svg">
+                    </button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div id="course-add-modal">
+        <div>
+            <div>
+                <span onclick="closeAddCourseModal()">&times;</span>
+                <h2>Add New Course</h2>
+            </div>
+            <form action="/course" method="post">
+                <input type="text" id="course code" name="course code" placeholder="Course Code">
+                <br>
+                <input type="text" id="course name" name="course name" placeholder="Course Name">
+                <br>
+                <button type="submit">Add Course</button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
+

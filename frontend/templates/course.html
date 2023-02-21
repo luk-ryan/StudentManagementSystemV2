@@ -8,6 +8,7 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+
     <h1><b>{{course.code}}</b> {{course.name}}</h1>
     <h2>Evaluations</h2>
         <div>
@@ -34,4 +35,4 @@
             <button id="show-evaluation-button" onclick="showEvaluationInputRow()">+</button>
         </div>
     <script src="/static/js/evaluation.js"></script>
-{% endblock %}
+{% endblock content %}

@@ -46,7 +46,10 @@ def home():
     Directories for the home page
     '''
 
-    return render_template("home.html")
+    if "NAME" in session:
+        return render_template("student.html", student=session["NAME"])
+    else:
+        return render_template("home.html")
 
 
 @app.route("/login", methods = ["GET"])
@@ -75,7 +78,7 @@ def login_post():
         session["EMAIL"] =  email
         # print (session["ID"])
         flash(f"Logged in Successfully!", "info") # messaging tells user they have been logged in
-        return redirect(url_for("student")) # redirects to student page
+        return redirect(url_for("home")) # redirects to student page
     except Exception as error:
         
         flash(str(error), "error") # messaging tells user they have been logged in
@@ -125,24 +128,6 @@ def logout():
     return redirect(url_for("login_get"))
 
 
-@app.route("/student")
-def student():
-    
-    '''
-    Directory for the Student page
-    '''
-
-    # this is the default Student home page once they log in
-    if "NAME" in session:
-        name = session["NAME"]
-        return render_template("student.html", student = name)
-    
-    # redirects back to login if they are not logged in the session
-    else:
-        flash(f"You are not logged in", "error")
-        return redirect(url_for("login_get"))
-
-
 @app.route("/course", methods = ["GET"])
 def course_get():
 
@@ -152,7 +137,7 @@ def course_get():
 
     if "NAME" in session:
         courses = Course.getCourses(session["EMAIL"])
-        return render_template("courses.html", student = session["NAME"], courses = courses)
+        return render_template("courses.html", student = session["NAME"], courses = list(courses))
 
     # redirects back to login if they are not logged in the session
     else:

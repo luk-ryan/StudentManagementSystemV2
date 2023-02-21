@@ -15,6 +15,7 @@
                 {% for course in courses %}
                     <div>
                         <a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
+                        <p>{{course.gradePoint}}</p>
                         <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
                             <img src="static/svg/trash.svg">
                         </button>

@@ -101,11 +101,46 @@ class Course(db.Model):
         return Course.query.filter_by(_id = id, trashed = False).first()
 
 
-    def calculate():
-        evaluations = Evaluation.query.filter_by(courseId = id)
+    def calculate(course_Id):
+        course = Course.query.filter_by(_id = course_Id, trashed = False).first()
+        evaluations = Evaluation.getEvaluations(course_Id)
 
-        for ev in evaluations:
-            print(ev)
+        sumOfWeights = 0
+        sumOfGrades = 0
+
+        for e in evaluations:
+            sumOfWeights += e.weight
+            sumOfGrades += (e.weight * e.grade)
+            
+        finalGrade = sumOfGrades/sumOfWeights
+
+        course.gradePoint = Course.convertGradePoint(finalGrade*100)
+        db.session.commit()
+            
+    def convertGradePoint(grade): 
+
+        if (grade >= 93):
+            return 4.0
+        elif (grade >= 90):
+            return 3.7
+        elif (grade >= 87):
+            return 3.3
+        elif (grade >= 83):
+            return 3.0
+        elif (grade >= 80):
+            return 2.7
+        elif (grade >= 77):
+            return 2.3
+        elif (grade >= 73):
+            return 2.0
+        elif (grade >= 70):
+            return 1.7
+        elif (grade >= 67):
+            return 1.3
+        elif (grade >= 65):
+            return 1.0
+        else:
+            return 0.0
 
     def getCourses(student_email):
         student_id = Student.query.filter_by(email = student_email).first()._id
@@ -117,6 +152,8 @@ class Course(db.Model):
 
         db.session.add(evaluation)
         db.session.commit()
+
+        Course.calculate(course_id)
 
         return evaluation
 

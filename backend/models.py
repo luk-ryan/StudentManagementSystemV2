@@ -33,6 +33,18 @@ class Student(db.Model):
         return '<Student %r>' % self.email
 
 
+    def toDict(self):
+        return {
+            "id": self._id,
+            "firstName": self.firstName,
+            "lastName": self.lastName,
+            "email": self.email,
+            "school": self.school,
+            "gpa": self.gpa,
+            "courses": self.courses
+        }
+
+
     def register(first, last, email, password):
 
         # check that email is valid
@@ -59,12 +71,15 @@ class Student(db.Model):
         if not student:
             raise Exception("Email is either invalid or not registered in the system")
 
-        if not bcrypt.check_password_hash(student.password, password): # returns False
+        if not bcrypt.check_password_hash(student.password, password):
             raise Exception("Invalid Password")
 
         fName = student.firstName
         return fName
 
+
+    def getStudentByEmail(email):
+        return Student.query.filter_by(email = email).first()
 
 
     def addCourse(course_code, course_name, student_email):

@@ -26,7 +26,7 @@
     <hr>
     <h2>Email</h2>
     <p>View and change your email.</p>
-    <form action="#" method="post">
+    <form action="/student/email" method="POST">
         <label for="email">Email</label>
         <input type="text" id="email" name="email" value="{{ student['email'] }}">
         <br>
@@ -36,15 +36,15 @@
     <h2>Password</h2>
     <h3>Change Password</h3>
     <p>Change your password.</p>
-    <form action="#" method="post">
-        <label for="email">Current Password</label>
-        <input type="text" id="email" name="email">
+    <form action="/student/password" method="POST">
+        <label for="currentPassword">Current Password</label>
+        <input type="text" id="currentPassword" name="currentPassword">
         <br>
-        <label for="email">New Password</label>
-        <input type="text" id="email" name="email">
+        <label for="newPassword">New Password</label>
+        <input type="text" id="newPassword" name="newPassword">
         <br>
-        <label for="email">Confirm New Password</label>
-        <input type="text" id="email" name="email">
+        <label for="confirmNewPassword">Confirm New Password</label>
+        <input type="text" id="confirmNewPassword" name="confirmNewPassword">
         <br>
         <button type="submit">Update</button>
     </form>

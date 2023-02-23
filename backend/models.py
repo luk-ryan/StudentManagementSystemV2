@@ -45,6 +45,17 @@ class Student(db.Model):
         }
 
 
+    def validateAndHashPassword(password: str, confirmPassword: str):
+        if (len(password) < 5):
+            raise Exception("Password must be more than 4 characters")
+
+        passwordHash = bcrypt.generate_password_hash(password)
+
+        if bcrypt.check_password_hash(passwordHash, confirmPassword):
+            return passwordHash
+        raise Exception("Passwords do not match")
+
+
     def register(first, last, email, password):
 
         # check that email is valid

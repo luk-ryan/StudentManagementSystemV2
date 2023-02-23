@@ -9,55 +9,62 @@
         {% endif %}
     {% endwith %}
     <h1>{{ student['firstName'] }} {{ student['lastName'] }}'s Profile</h1>
-    <h2>Account Details</h2>
-    <p>View and edit your account details.</p>
-    <form action="/student" method="POST">
-        <label for="firstName">First Name</label>
-        <input type="text" id="firstName" name="firstName" value="{{ student['firstName'] }}">
-        <br>
-        <label for="lastName">Last Name</label>
-        <input type="text" id="lastName" name="lastName" value="{{ student['lastName'] }}">
-        <br>
-        <label for="school">School</label>
-        <input type="text" id="school" name="school" value="{{ student['school'] }}">
-        <br>
-        <button type="submit">Update</button>
-    </form>
-    <hr>
-    <h2>Email</h2>
-    <p>View and change your email.</p>
-    <form action="/student/email" method="POST">
-        <label for="email">Email</label>
-        <input type="text" id="email" name="email" value="{{ student['email'] }}">
-        <br>
-        <button type="submit">Update</button>
-    </form>
-    <hr>
-    <h2>Password</h2>
-    <h3>Change Password</h3>
-    <p>Change your password.</p>
-    <form action="/student/password" method="POST">
-        <label for="currentPassword">Current Password</label>
-        <input type="text" id="currentPassword" name="currentPassword">
-        <br>
-        <label for="newPassword">New Password</label>
-        <input type="text" id="newPassword" name="newPassword">
-        <br>
-        <label for="confirmNewPassword">Confirm New Password</label>
-        <input type="text" id="confirmNewPassword" name="confirmNewPassword">
-        <br>
-        <button type="submit">Update</button>
-    </form>
-    <h3>Reset Password</h3>
-    <p>Forgot your password? Reset your password here. This will send you an email with a password reset link.</p>
-    <form>
-        <button type="submit" onclick="alert('Not implemented yet :(')">Send Password Reset Email</button>
-    </form>
-    <hr>
-    <h2>Delete Account</h2>
-    <p>Delete your account.</p>
-    <form action="/student/delete" method="POST">
-        <input name="email" type="text" value="{{ student['email'] }}" readonly="true" hidden="true" />
-        <button type="submit">Delete</button>
-    </form>
+    <div class="profile-section">
+        <h2>Account Details</h2>
+        <p>View and edit your account details.</p>
+        <form action="/student" method="POST">
+            <div class="profile-form-inputs">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" value="{{ student['firstName'] }}">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" value="{{ student['lastName'] }}">
+                <label for="school">School</label>
+                <input type="text" id="school" name="school" value="{{ student['school'] }}">
+            </div>
+            <button type="submit">Update</button>
+        </form>
+        <hr>
+    </div>
+    <div class="profile-section">
+        <h2>Email</h2>
+        <p>View and change your email.</p>
+        <form action="/student/email" method="POST">
+            <div class="profile-form-inputs">
+                <label for="email">Email</label>
+                <input type="text" id="email" name="email" value="{{ student['email'] }}">
+            </div>
+            <button type="submit">Update</button>
+        </form>
+        <hr>
+    </div>
+    <div class="profile-section">
+        <h2>Password</h2>
+        <h3>Change Password</h3>
+        <p>Change your password.</p>
+        <form action="/student/password" method="POST">
+            <div class="profile-form-inputs">
+                <label for="currentPassword">Current Password</label>
+                <input type="text" id="currentPassword" name="currentPassword">
+                <label for="newPassword">New Password</label>
+                <input type="text" id="newPassword" name="newPassword">
+                <label for="confirmNewPassword">Confirm New Password</label>
+                <input type="text" id="confirmNewPassword" name="confirmNewPassword">
+            </div>
+            <button type="submit">Update</button>
+        </form>
+        <h3>Reset Password</h3>
+        <p>Forgot your password? Reset your password here. This will send you an email with a password reset link.</p>
+        <form>
+            <button type="submit" onclick="alert('Not implemented yet :(')">Send Password Reset Email</button>
+        </form>
+        <hr>
+    </div>
+    <div class="profile-section">
+        <h2>Delete Account</h2>
+        <p>Delete your account.</p>
+        <form action="/student/delete" method="POST">
+            <input name="email" type="text" value="{{ student['email'] }}" readonly="true" hidden="true" />
+            <button type="submit">Delete</button>
+        </form>
+    </div>
 {% endblock %}

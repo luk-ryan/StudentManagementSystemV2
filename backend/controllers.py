@@ -277,3 +277,23 @@ def change_password():
     else:
         flash(f"You are not logged in", "error")
         return redirect(url_for("login_get"))
+
+
+@app.route("/student/delete", methods = ["POST"])
+def delete_student():
+    '''
+    Delete a student from the database.
+    '''
+
+    if "EMAIL" in session:
+        if session["EMAIL"] == request.form["email"]:
+            Student.deleteStudent(request.form["email"])
+            del session["EMAIL"]
+            del session["NAME"]
+            return redirect(url_for("home"))
+        else:
+            flash("User attempted to be deleted does not match with current session user", "error")
+            return redirect(url_for("profile_get"))
+    else:
+        flash("You are not logged in", "error")
+        return redirect(url_for("login_get"))

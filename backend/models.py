@@ -114,11 +114,18 @@ class Student(db.Model):
         db.session.add(course)
         db.session.commit()
     
+
     def removeCourse(course_id):
         
         trashed_course = Course.query.filter_by(_id = course_id).first()
         trashed_course.trashed = True
         #Course.query.filter_by(_id = course_id).delete()
+        db.session.commit()
+
+
+    def deleteStudent(email: str):
+        student = Student.query.filter_by(email = email).first()
+        db.session.delete(student)
         db.session.commit()
 
 

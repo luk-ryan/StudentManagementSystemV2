@@ -56,7 +56,8 @@
     <hr>
     <h2>Delete Account</h2>
     <p>Delete your account.</p>
-    <form action="#" method="post">
+    <form action="/student/delete" method="POST">
+        <input name="email" type="text" value="{{ student['email'] }}" readonly="true" hidden="true" />
         <button type="submit">Delete</button>
     </form>
 {% endblock %}

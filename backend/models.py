@@ -82,6 +82,19 @@ class Student(db.Model):
         return Student.query.filter_by(email = email).first()
 
 
+    def updateStudent(email: str, studentValues: dict):
+        student = Student.query.filter_by(email = email).first()
+        if "email" in studentValues:
+            student.email = studentValues["email"]
+        elif "password" in studentValues:
+            student.password = studentValues["password"]
+        else:
+            student.firstName = studentValues["firstName"]
+            student.lastName = studentValues["lastName"]
+            student.school = studentValues["school"]
+        db.session.commit()
+
+
     def addCourse(course_code, course_name, student_email):
         student_id = Student.query.filter_by(email = student_email).first()._id
 

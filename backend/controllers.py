@@ -217,7 +217,7 @@ def evaluation_post():
     }
 
 
-@app.route("/profile")
+@app.route("/profile", methods = ["GET"])
 def profile_get():
     '''
     Render the student's profile page.
@@ -226,6 +226,20 @@ def profile_get():
     if "EMAIL" in session:
         student = Student.getStudentByEmail(session["EMAIL"])
         return render_template("profile.html", student = student.toDict())
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/student", methods = ["POST"])
+def update_profile():
+    '''
+    Update a student's first name, last name, and/or school.
+    '''
+
+    if "EMAIL" in session:
+        Student.updateStudent(session["EMAIL"], request.form)
+        return redirect(url_for("profile_get"))
     else:
         flash(f"You are not logged in", "error")
         return redirect(url_for("login_get"))

@@ -9,20 +9,20 @@
         {% endif %}
     {% endwith %}
     <h1>{{ student['firstName'] }} {{ student['lastName'] }}'s Profile</h1>
-        <h2>Account Details</h2>
-        <p>View and edit your account details.</p>
-        <form action="#" method="post">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" value="{{ student['firstName'] }}">
-            <br>
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" value="{{ student['lastName'] }}">
-            <br>
-            <label for="school">School</label>
-            <input type="text" id="school" name="school" value="{{ student['school'] }}">
-            <br>
-            <button type="submit">Update</button>
-        </form>
+    <h2>Account Details</h2>
+    <p>View and edit your account details.</p>
+    <form action="/student" method="POST">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" name="firstName" value="{{ student['firstName'] }}">
+        <br>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" name="lastName" value="{{ student['lastName'] }}">
+        <br>
+        <label for="school">School</label>
+        <input type="text" id="school" name="school" value="{{ student['school'] }}">
+        <br>
+        <button type="submit">Update</button>
+    </form>
     <hr>
     <h2>Email</h2>
     <p>View and change your email.</p>

@@ -1,0 +1,62 @@
+{% extends 'page_template.html' %}
+{% block title %}Student{% endblock %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for cat, msg in messages %}
+                <p class="block flash-message {{cat}}">{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h1>{{ student['firstName'] }} {{ student['lastName'] }}'s Profile</h1>
+        <h2>Account Details</h2>
+        <p>View and edit your account details.</p>
+        <form action="#" method="post">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" value="{{ student['firstName'] }}">
+            <br>
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" value="{{ student['lastName'] }}">
+            <br>
+            <label for="school">School</label>
+            <input type="text" id="school" name="school" value="{{ student['school'] }}">
+            <br>
+            <button type="submit">Update</button>
+        </form>
+    <hr>
+    <h2>Email</h2>
+    <p>View and change your email.</p>
+    <form action="#" method="post">
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" value="{{ student['email'] }}">
+        <br>
+        <button type="submit">Update</button>
+    </form>
+    <hr>
+    <h2>Password</h2>
+    <h3>Change Password</h3>
+    <p>Change your password.</p>
+    <form action="#" method="post">
+        <label for="email">Current Password</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="email">New Password</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <label for="email">Confirm New Password</label>
+        <input type="text" id="email" name="email">
+        <br>
+        <button type="submit">Update</button>
+    </form>
+    <h3>Reset Password</h3>
+    <p>Forgot your password? Reset your password here. This will send you an email with a password reset link.</p>
+    <form action="#" method="post">
+        <button type="submit">Send Password Reset Email</button>
+    </form>
+    <hr>
+    <h2>Delete Account</h2>
+    <p>Delete your account.</p>
+    <form action="#" method="post">
+        <button type="submit">Delete</button>
+    </form>
+{% endblock %}

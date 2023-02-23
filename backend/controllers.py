@@ -215,3 +215,17 @@ def evaluation_post():
         "evaluation_grade": evaluation.grade,
         "evaluation_weight": evaluation.weight
     }
+
+
+@app.route("/profile")
+def profile_get():
+    '''
+    Render the student's profile page.
+    '''
+
+    if "EMAIL" in session:
+        student = Student.getStudentByEmail(session["EMAIL"])
+        return render_template("profile.html", student = student.toDict())
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))

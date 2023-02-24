@@ -11,7 +11,10 @@
         {% endif %}
     {% endwith %}
 
-    <h1>{{student}} Home Page</h1>
+    <h1>{{student['firstName']}} {{student['lastName']}}'s Home Page</h1>
+
+    <p> Your GPA: {{student['GPA']}}</p>
+
 
 
 {% endblock %}

@@ -102,14 +102,19 @@ class Student(db.Model):
         return fName
 
 
-    # def getStudentByEmail(email):
-    #     return Student.query.filter_by(email = email).first()
+    def getStudentByEmail(email):
+        return Student.query.filter_by(email = email).first()
     
-    # def calculate():
-        
-    #     Student.gradePoint = 0
-    #     db.session.commit()
+    def calculate(student_id):
+        student = Student.query.filter_by(_id = student_id).first()
 
+        sumOfGradePoints = 0
+
+        for course in student.courses:
+            sumOfGradePoints += course.gradePoint
+
+        student.gradePoint = sumOfGradePoints / student.creditsCompleted
+        db.session.commit()
 
     def updateStudent(email: str, studentValues: dict):
         student = Student.query.filter_by(email = email).first()
@@ -125,9 +130,10 @@ class Student(db.Model):
 
 
     def addCourse(course_code, course_name, student_email, course_credits):
-        student_id = Student.query.filter_by(email = student_email).first()._id
+        student = Student.query.filter_by(email = student_email).first()
+        course = Course(course_code, course_name, student._id, course_credits)
 
-        course = Course(course_code, course_name, student_id, course_credits)
+        student.creditsCompleted += float(course_credits)
 
         db.session.add(course)
         db.session.commit()
@@ -219,7 +225,10 @@ class Course(db.Model):
         db.session.add(evaluation)
         db.session.commit()
 
+        course = Course.query.filter_by(_id = course_id).first()
+
         Course.calculate(course_id)
+        Student.calculate(Student.query.filter_by(_id = course.studentId).first()._id)
 
         return evaluation
 

@@ -15,7 +15,8 @@
                 {% for course in courses %}
                     <div>
                         <a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
-                        <p>{{course.gradePoint}}</p>
+                        <p>Grade Point: {{course.gradePoint}}</p>
+                        <p>Credits: {{course.credits}}</p>
                         <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
                             <img src="static/svg/trash.svg">
                         </button>
@@ -52,6 +53,8 @@
                 <input type="text" id="course code" name="course code" placeholder="Course Code">
                 <br>
                 <input type="text" id="course name" name="course name" placeholder="Course Name">
+                <br>
+                <input type="number" id="credits" name="credits" placeholder="Credits">
                 <br>
                 <button type="submit">Add Course</button>
             </form>

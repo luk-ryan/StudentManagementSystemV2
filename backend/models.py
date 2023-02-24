@@ -67,10 +67,10 @@ class Student(db.Model):
 
 
 
-    def addCourse(course_code, course_name, student_email):
+    def addCourse(course_code, course_name, student_email, course_credits):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
-        course = Course(course_code, course_name, student_id)
+        course = Course(course_code, course_name, student_id, course_credits)
 
         db.session.add(course)
         db.session.commit()
@@ -88,14 +88,16 @@ class Course(db.Model):
     code = db.Column(db.String(100), nullable = False)
     name =  db.Column(db.String(100), nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+    credits = db.Column(db.Float)
     gradePoint = db.Column(db.Float)
     trashed = db.Column(db.Boolean, default = False, nullable = False) 
 
 
-    def __init__(self, code, name, studentId):
+    def __init__(self, code, name, studentId, credits):
         self.code = code
         self.name = name
         self.studentId = studentId
+        self.credits = credits
 
     def getCourseById(id):
         return Course.query.filter_by(_id = id, trashed = False).first()

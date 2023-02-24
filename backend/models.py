@@ -18,15 +18,24 @@ class Student(db.Model):
     email = db.Column(db.String(100), unique = True, nullable = False)
     password = db.Column(db.String(100), nullable = False)
     school = db.Column(db.String(100))
+    program = db.Column(db.String(100))
+    year = db.Column(db.String(100))
+    creditsCompleted = db.Column(db.Float, nullable = False)
+    creditsToGraduate = db.Column(db.Float, nullable = False)
     gpa = db.Column(db.Float)
     courses = db.relationship("Course", backref="student")
 
 
-    def __init__(self, firstName, lastName, email, password):
+    def __init__(self, firstName, lastName, email, password, school, program, year, creditsToGraduate):
         self.firstName = firstName
         self.lastName = lastName
         self.email = email
         self.password = password
+        self.school = school
+        self.program = program
+        self.year = year
+        self.creditsCompleted = 0.0
+        self.creditsToGraduate = creditsToGraduate
 
 
     def __repr__(self):
@@ -40,6 +49,10 @@ class Student(db.Model):
             "lastName": self.lastName,
             "email": self.email,
             "school": self.school,
+            "program": self.program,
+            "year": self.year,
+            "creditsCompleted": self.creditsCompleted,
+            "creditsToGraduate": self.creditsToGraduate,
             "gpa": self.gpa,
             "courses": self.courses
         }
@@ -56,7 +69,7 @@ class Student(db.Model):
         raise Exception("Passwords do not match")
 
 
-    def register(first, last, email, password):
+    def register(first, last, email, password, school, program, year, creditsToGraduate):
 
         # check that email is valid
         email_regex = re.compile(r"([-!#-'*+/-9=?A-Z^-~]+(\.[-!#-'*+/-9=?A-Z^-~]\
@@ -70,7 +83,7 @@ class Student(db.Model):
         if not found:
 
             hashed_password = bcrypt.generate_password_hash(password)
-            acc = Student(first, last, email, hashed_password)
+            acc = Student(first, last, email, hashed_password, school, program, year, creditsToGraduate)
             db.session.add(acc)
             db.session.commit()
 
@@ -89,8 +102,13 @@ class Student(db.Model):
         return fName
 
 
-    def getStudentByEmail(email):
-        return Student.query.filter_by(email = email).first()
+    # def getStudentByEmail(email):
+    #     return Student.query.filter_by(email = email).first()
+    
+    # def calculate():
+        
+    #     Student.gradePoint = 0
+    #     db.session.commit()
 
 
     def updateStudent(email: str, studentValues: dict):

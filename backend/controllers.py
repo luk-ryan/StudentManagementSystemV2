@@ -216,3 +216,85 @@ def evaluation_post():
         "evaluation_grade": evaluation.grade,
         "evaluation_weight": evaluation.weight
     }
+
+
+@app.route("/profile", methods = ["GET"])
+def profile_get():
+    '''
+    Render the student's profile page.
+    '''
+
+    if "EMAIL" in session:
+        student = Student.getStudentByEmail(session["EMAIL"])
+        return render_template("profile.html", student = student.toDict())
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/student", methods = ["POST"])
+@app.route("/student/email", methods = ["POST"])
+def update_profile():
+    '''
+    Update a student's first name, last name, and/or school.
+    '''
+
+    if "EMAIL" in session:
+        Student.updateStudent(session["EMAIL"], request.form)
+
+        if "email" in request.form:
+            session["EMAIL"] = request.form["email"]
+            flash(f"Email updated", "success")
+        else:
+            flash(f"Profile updated", "success")
+        return redirect(url_for("profile_get"))
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/student/password", methods = ["POST"])
+def change_password():
+    '''
+    Update a student's first name, last name, and/or school.
+    '''
+
+    if "EMAIL" in session:
+        student = Student.getStudentByEmail(session["EMAIL"])
+        try:
+            Student.login(student.email, request.form["currentPassword"])
+        except Exception as exception:
+            flash("Current password incorrect", "error")
+            return redirect(url_for("profile_get"))
+        try:
+            hashedPassword = Student.validateAndHashPassword(request.form["newPassword"], request.form["confirmNewPassword"])
+            Student.updateStudent(session["EMAIL"], { "password": hashedPassword })
+        except Exception as exception:
+            flash(str(exception), "error")
+            return redirect(url_for("profile_get"))
+
+        flash(f"Password updated", "success")
+        return redirect(url_for("profile_get"))
+    else:
+        flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/student/delete", methods = ["POST"])
+def delete_student():
+    '''
+    Delete a student from the database.
+    '''
+
+    if "EMAIL" in session:
+        if session["EMAIL"] == request.form["email"]:
+            Student.deleteStudent(request.form["email"])
+            del session["EMAIL"]
+            del session["NAME"]
+            return redirect(url_for("home"))
+        else:
+            flash("User attempted to be deleted does not match with current session user", "error")
+            return redirect(url_for("profile_get"))
+    else:
+        flash("You are not logged in", "error")
+        return redirect(url_for("login_get"))

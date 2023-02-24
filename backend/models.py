@@ -33,6 +33,29 @@ class Student(db.Model):
         return '<Student %r>' % self.email
 
 
+    def toDict(self):
+        return {
+            "id": self._id,
+            "firstName": self.firstName,
+            "lastName": self.lastName,
+            "email": self.email,
+            "school": self.school,
+            "gpa": self.gpa,
+            "courses": self.courses
+        }
+
+
+    def validateAndHashPassword(password: str, confirmPassword: str):
+        if (len(password) < 5):
+            raise Exception("Password must be more than 4 characters")
+
+        passwordHash = bcrypt.generate_password_hash(password)
+
+        if bcrypt.check_password_hash(passwordHash, confirmPassword):
+            return passwordHash
+        raise Exception("Passwords do not match")
+
+
     def register(first, last, email, password):
 
         # check that email is valid
@@ -59,12 +82,28 @@ class Student(db.Model):
         if not student:
             raise Exception("Email is either invalid or not registered in the system")
 
-        if not bcrypt.check_password_hash(student.password, password): # returns False
+        if not bcrypt.check_password_hash(student.password, password):
             raise Exception("Invalid Password")
 
         fName = student.firstName
         return fName
 
+
+    def getStudentByEmail(email):
+        return Student.query.filter_by(email = email).first()
+
+
+    def updateStudent(email: str, studentValues: dict):
+        student = Student.query.filter_by(email = email).first()
+        if "email" in studentValues:
+            student.email = studentValues["email"]
+        elif "password" in studentValues:
+            student.password = studentValues["password"]
+        else:
+            student.firstName = studentValues["firstName"]
+            student.lastName = studentValues["lastName"]
+            student.school = studentValues["school"]
+        db.session.commit()
 
 
     def addCourse(course_code, course_name, student_email, course_credits):
@@ -75,11 +114,18 @@ class Student(db.Model):
         db.session.add(course)
         db.session.commit()
     
+
     def removeCourse(course_id):
         
         trashed_course = Course.query.filter_by(_id = course_id).first()
         trashed_course.trashed = True
         #Course.query.filter_by(_id = course_id).delete()
+        db.session.commit()
+
+
+    def deleteStudent(email: str):
+        student = Student.query.filter_by(email = email).first()
+        db.session.delete(student)
         db.session.commit()
 
 

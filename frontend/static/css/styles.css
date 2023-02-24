@@ -559,3 +559,43 @@ body {
 #course-add-modal button:hover {
     filter: brightness(1.3);
 }
+
+.profile-section {
+    margin-left: 20px;
+    width: 50%;
+}
+
+.profile-section hr {
+    margin-top: 20px;
+    border: 1px solid var(--text-color);
+}
+
+.profile-form-inputs {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    row-gap: 5px;
+}
+
+.profile-section input {
+    font-size: var(--paragraph-font-size);
+    padding: 3px;
+}
+
+.profile-section label {
+    font-size: var(--paragraph-font-size);
+}
+
+.profile-section button {
+    font-size: var(--paragraph-font-size);
+    font-weight: bold;
+    width: 100%;
+    margin-top: 10px;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+.profile-section button:hover {
+    filter: brightness(1.3);
+}

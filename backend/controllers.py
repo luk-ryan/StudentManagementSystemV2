@@ -97,8 +97,14 @@ def register_post():
     email = request.form["email"]
     password = request.form["password"]
 
+    school = request.form["school"]
+    program = request.form["program"]
+    year = request.form["year"]
+    year_string = "year " + year
+    creditsToGraduate = request.form["creditsToGraduate"]
+
     try:
-        Student.register(first_name, last_name, email, password)
+        Student.register(first_name, last_name, email, password, school, program, year_string, creditsToGraduate)
         flash(f"You have been successfully registered! Please login with your email", "success") # messaging tells user they have been logged in
         return redirect(url_for("login_get")) # redirects to student page
     except Exception as err:

@@ -109,7 +109,7 @@ def register_post():
         return redirect(url_for("login_get")) # redirects to student page
     except Exception as err:
         flash(f"{str(err)}", "error")
-        return render_template('register.html', message='')
+        return render_template('register.html', message='', form=request.form)
 
 
 @app.route("/registerInvalid")

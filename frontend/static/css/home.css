@@ -1,0 +1,61 @@
+#welcome-page-message > h1 {
+    font-size: var(--title-font-size);
+}
+
+#welcome-page-message > p {
+    font-size: var(--subheading-font-size);
+}
+
+#welcome-prompt {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 75px;
+}
+
+#welcome-prompt > div:first-child {
+    padding-right: 20px;
+    border-right: 1px solid var(--text-color);;
+    margin-right: 20px;
+}
+
+#welcome-prompt p {
+    font-size: var(--paragraph-font-size);
+    font-weight: bold;
+}
+
+#welcome-prompt .link-button-1 {
+    width: 200px;
+}
+
+#welcome-sections {
+    padding-top: 30px;
+}
+
+#welcome-sections > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+#welcome-sections > div:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+#welcome-sections img {
+    width: 33%
+}
+
+#final-welcome-prompt {
+    margin-top: 75px;
+    margin-bottom: 50px;
+}
+
+#final-welcome-prompt > h2 {
+    font-size: var(--heading-font-size);
+}
+
+#final-welcome-prompt > p {
+    margin-bottom: 25px;
+}

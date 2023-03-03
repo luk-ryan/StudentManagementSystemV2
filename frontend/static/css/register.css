@@ -1,0 +1,21 @@
+#register-form > div {
+    display: flex;
+}
+
+#register-form > div > button {
+    flex-basis: 100%;
+    transition: flex-basis 0.5s;
+}
+
+#register-form > div > button.shrink {
+    flex-basis: 50%;
+    transition: flex-basis 0.5s;
+}
+
+#register-form > div > button.shrink:first-child {
+    margin-right: 2px;
+}
+
+#register-form > div > button.shrink:last-child {
+    margin-right: 2px;
+}

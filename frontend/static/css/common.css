@@ -1,6 +1,8 @@
 /* ----- ----- ----- Variable Definitions ----- ----- ----- */
 
-/* Font families and font sizes */
+/*
+ *Font families and font sizes
+ */
 :root {
     --heading-font-family: sans-serif;
     --paragraph-font-family: sans-serif;
@@ -144,6 +146,8 @@ body {
     text-align: center;
 }
 
+/* ----- Base Links and Link Buttons ----- */
+
 .link {
     color: var(--accent-color);
     font-weight: bold;
@@ -190,6 +194,8 @@ body {
     filter: brightness(1.3);
 }
 
+/* ----- Flash Messages ----- */
+
 .flash-message {
     padding: 10px;
     margin-bottom: 15px;
@@ -219,6 +225,8 @@ body {
     border-left-color: var(--error-color-border);
     background-color: var(--error-color);
 }
+
+/* ----- Navigation Header ----- */
 
 #top-navbar {
     position: fixed;
@@ -289,6 +297,8 @@ body {
     text-decoration: none;
 }
 
+/* ----- Footer ----- */
+
 #footer {
     background-color: var(--main-color);
     color: var(--accent-color);
@@ -337,11 +347,13 @@ body {
     text-decoration: underline var(--accent-color) solid 2px;
 }
 
-.login-register-form form {
+/* ----- Base Form ----- */
+
+div.base-form form {
     width: 100%;
 }
 
-.login-register-form input {
+div.base-form input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -351,7 +363,7 @@ body {
     font-size: var(--paragraph-font-size);
 }
 
-.login-register-form button {
+div.base-form button {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -364,260 +376,7 @@ body {
     color: var(--accent-color);
 }
 
-.login-register-form button:hover {
+div.base-form button:hover {
     filter: brightness(1.3);
     cursor: pointer;
-}
-
-#register-form > div {
-    display: flex;
-}
-
-#register-form > div > button {
-    flex-basis: 100%;
-    transition: flex-basis 0.5s;
-}
-
-#register-form > div > button.shrink {
-    flex-basis: 50%;
-    transition: flex-basis 0.5s;
-}
-
-#register-form > div > button.shrink:first-child {
-    margin-right: 2px;
-}
-
-#register-form > div > button.shrink:last-child {
-    margin-right: 2px;
-}
-
-#welcome-page-message > h1 {
-    font-size: var(--title-font-size);
-}
-
-#welcome-page-message > p {
-    font-size: var(--subheading-font-size);
-}
-
-#welcome-prompt {
-    display: flex;
-    justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 75px;
-}
-
-#welcome-prompt > div:first-child {
-    padding-right: 20px;
-    border-right: 1px solid var(--text-color);;
-    margin-right: 20px;
-}
-
-#welcome-prompt p {
-    font-size: var(--paragraph-font-size);
-    font-weight: bold;
-}
-
-#welcome-prompt .link-button-1 {
-    width: 200px;
-}
-
-#welcome-sections {
-    padding-top: 30px;
-}
-
-#welcome-sections > div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-}
-
-#welcome-sections > div:nth-child(even) {
-    flex-direction: row-reverse;
-}
-
-#welcome-sections img {
-    width: 33%
-}
-
-#final-welcome-prompt {
-    margin-top: 75px;
-    margin-bottom: 50px;
-}
-
-#final-welcome-prompt > h2 {
-    font-size: var(--heading-font-size);
-}
-
-#final-welcome-prompt > p {
-    margin-bottom: 25px;
-}
-
-#courses > h2 {
-    margin-bottom: 10px;
-    font-size: var(--title-font-size);
-}
-
-#course-list .link {
-    font-size: var(--subheading-font-size);
-}
-
-#course-list {
-    margin-bottom: 10px;
-}
-
-#course-list > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-top: 1px solid var(--text-color);
-}
-
-#course-list > div:last-child {
-    font-size: var(--subheading-font-size);
-}
-
-.light-theme #course-list .icon-button {
-    filter: invert(0);
-}
-
-#course-list .icon-button {
-    background-color: transparent;
-    border: none;
-    filter: invert(1);
-    cursor: pointer;
-}
-
-.course-add-form > form {
-    max-width: 750px;
-    margin: auto;
-}
-
-#course-add-modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0,0,0,0.4);
-}
-
-#course-add-modal > div {
-    position: relative;
-    margin: auto;
-    width: 80%;
-    border-radius: 5px;
-    background-color: var(--background-color);
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
-}
-
-#course-add-modal h2 {
-    text-align: center;
-    padding: 10px;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    background-color: var(--main-color);
-    color: var(--accent-color);
-}
-
-#course-add-modal span {
-    color: var(--accent-color);
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    padding: 10px;
-    cursor: pointer;
-    user-select: none;
-}
-
-#course-add-modal span:hover {
-    filter: brightness(1.3);
-}
-
-#course-add-modal form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-#course-add-modal input {
-    width: 75%;
-    height: 50px;
-    padding: 15px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border-width: 1px;
-    font-family: var(--paragraph-font-family);
-    font-size: var(--paragraph-font-size);
-}
-
-#course-add-modal input:first-child {
-    margin-bottom: 0;
-}
-
-#course-add-modal button {
-    display: block;
-    width: 100%;
-    border: none;
-    text-align: center;
-    padding: 15px;
-    background-color: var(--accent-color);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    color: var(--text-color);
-    font-size: var(--subheading-font-size);
-    font-weight: bold;
-}
-
-#course-add-modal button:hover {
-    filter: brightness(1.3);
-}
-
-.profile-section {
-    margin-left: 20px;
-    width: 50%;
-}
-
-.profile-section hr {
-    margin-top: 20px;
-    border: 1px solid var(--text-color);
-}
-
-.profile-form-inputs {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    row-gap: 5px;
-}
-
-.profile-section input {
-    font-size: var(--paragraph-font-size);
-    padding: 3px;
-}
-
-.profile-section label {
-    font-size: var(--paragraph-font-size);
-}
-
-.profile-section button {
-    font-size: var(--paragraph-font-size);
-    font-weight: bold;
-    width: 100%;
-    margin-top: 10px;
-    padding: 5px;
-    border-radius: 3px;
-    background-color: var(--main-color);
-    color: var(--accent-color);
-}
-
-.profile-section button:hover {
-    filter: brightness(1.3);
 }

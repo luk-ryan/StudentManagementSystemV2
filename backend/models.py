@@ -111,9 +111,10 @@ class Student(db.Model):
         sumOfGradePoints = 0
 
         for course in student.courses:
-            sumOfGradePoints += course.gradePoint
+            sumOfGradePoints += (course.gradePoint * course.credits)
 
-        student.gradePoint = sumOfGradePoints / student.creditsCompleted
+        student.gpa = sumOfGradePoints / student.creditsCompleted
+
         db.session.commit()
 
     def updateStudent(email: str, studentValues: dict):
@@ -187,6 +188,7 @@ class Course(db.Model):
         finalGrade = sumOfGrades/sumOfWeights
 
         course.gradePoint = Course.convertGradePoint(finalGrade*100)
+        Student.calculate(Student.query.filter_by(_id = course.studentId).first()._id)
         db.session.commit()
             
     def convertGradePoint(grade): 
@@ -225,11 +227,8 @@ class Course(db.Model):
         db.session.add(evaluation)
         db.session.commit()
 
-        course = Course.query.filter_by(_id = course_id).first()
-
         Course.calculate(course_id)
-        Student.calculate(Student.query.filter_by(_id = course.studentId).first()._id)
-
+        
         return evaluation
 
 

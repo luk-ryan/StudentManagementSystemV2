@@ -101,7 +101,6 @@ class Student(db.Model):
         fName = student.firstName
         return fName
 
-
     def getStudentByEmail(email):
         return Student.query.filter_by(email = email).first()
     
@@ -114,7 +113,7 @@ class Student(db.Model):
             sumOfGradePoints += (course.gradePoint * course.credits)
 
         student.gpa = sumOfGradePoints / student.creditsCompleted
-
+        
         db.session.commit()
 
     def updateStudent(email: str, studentValues: dict):

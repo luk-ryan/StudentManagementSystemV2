@@ -1,35 +1,3 @@
-.login-register-form form {
-    width: 100%;
-}
-
-.login-register-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border-width: 1px;
-    font-family: var(--paragraph-font-family);
-    font-size: var(--paragraph-font-size);
-}
-
-.login-register-form button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border-width: 1px;
-    font-family: var(--paragraph-font-family);
-    font-size: var(--paragraph-font-size);
-    font-weight: bold;
-    background-color: var(--main-color);
-    color: var(--accent-color);
-}
-
-.login-register-form button:hover {
-    filter: brightness(1.3);
-    cursor: pointer;
-}
-
 #register-form > div {
     display: flex;
 }

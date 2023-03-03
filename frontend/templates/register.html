@@ -10,7 +10,7 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <div class="block login-register-form">
+    <div class="block base-form">
         <form id="register-form" action="#" method="post">
             <label for="school">What school are you attending?</label>
             <input type="text" name="school" value="{{ form['school'] if form and form['school'] else '' }}">

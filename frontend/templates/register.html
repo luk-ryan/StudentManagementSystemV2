@@ -12,25 +12,63 @@
     {% endwith %}
     <div class="block base-form">
         <form id="register-form" action="#" method="post">
-            <label for="school">What school are you attending?</label>
-            <input type="text" name="school" value="{{ form['school'] if form and form['school'] else '' }}">
-            <label for="program">What program are you in?</label>
-            <input type="text" name="program" value="{{ form['program'] if form and form['program'] else '' }}">
-            <label for="year">What year are you currently studying in?</label>
-            <input type="number" name="year" value="{{ form['year'] if form and form['year'] else '' }}">
-            <label for="creditsToGraduate">How many credits in total do you need to graduate?</label>
-            <input type="number" name="creditsToGraduate" value="{{ form['creditsToGraduate'] if form and form['creditsToGraduate'] else '' }}">
-            <label for="fName" hidden>First Name</label>
-            <input type="text" name="fName" value="{{ form['fName'] if form and form['fName'] else '' }}" hidden>
-            <label for="lName" hidden>Last Name</label>
-            <input type="text" name="lName" value="{{ form['lName'] if form and form['lName'] else '' }}" hidden>
-            <label for="email" hidden>Email</label>
-            <input type="text" name="email" value="{{ form['email'] if form and form['email'] else '' }}" hidden>
-            <label for="password" hidden>Password</label>
-            <input type="password" name="password" value="{{ form['password'] if form and form['password'] else '' }}" hidden>
-            <div>
+
+            <div id="register-form-page-1">
+                <div>
+                    <label for="school">What school are you attending?</label>
+                    <input type="text" name="school" value="{{ form['school'] if form and form['school'] else '' }}">
+                </div>
+                <div>
+                    <label for="program">What program are you in?</label>
+                    <input type="text" name="program" value="{{ form['program'] if form and form['program'] else '' }}">
+                </div>
+                <div>
+                    <label for="year">What year are you currently studying in?</label>
+                    <input type="number" name="year" value="{{ form['year'] if form and form['year'] else '' }}">
+                </div>
+                <div id="credits-to-graduate">
+                    <div class="register-input-label">
+                        <label for="creditsToGraduate">How many credits in total do you need to graduate?<span>*</span></label>
+                        <p class="hidden"></p>
+                    </div>
+                    <input type="number" name="creditsToGraduate" value="{{ form['creditsToGraduate'] if form and form['creditsToGraduate'] else '' }}">
+                </div>
+            </div>
+
+            <div id="register-form-page-2" class="hidden">
+                <div id="first-name">
+                    <div class="register-input-label">
+                        <label for="fName">First Name<span>*</span></label>
+                        <p class="hidden"></p>
+                    </div>
+                    <input type="text" name="fName" value="{{ form['fName'] if form and form['fName'] else '' }}">
+                </div>
+                <div id="last-name">
+                    <div class="register-input-label">
+                        <label for="lName">Last Name<span>*</span></label>
+                        <p class="hidden"></p>
+                    </div>
+                    <input type="text" name="lName" value="{{ form['lName'] if form and form['lName'] else '' }}">
+                </div>
+                <div id="email">
+                    <div class="register-input-label">
+                        <label for="email">Email<span>*</span></label>
+                        <p class="hidden"></p>
+                    </div>
+                    <input type="text" name="email" value="{{ form['email'] if form and form['email'] else '' }}">
+                </div>
+                <div id="password">
+                    <div class="register-input-label">
+                        <label for="password">Password<span>*</span></label>
+                        <p class="hidden"></p>
+                    </div>
+                    <input type="password" name="password" value="{{ form['password'] if form and form['password'] else '' }}">
+                </div>
+            </div>
+
+            <div id="register-form-buttons">
                 <button id="register-form-toggle-button" type="button">Next</button>
-                <button id="register-form-submit-button" type="submit" hidden>Register</button>
+                <button id="register-form-submit-button" type="button" hidden>Register</button>
             </div>
         </form>
     </div>

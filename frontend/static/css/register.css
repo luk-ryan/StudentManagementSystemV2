@@ -1,21 +1,39 @@
-#register-form > div {
+#register-form-buttons {
     display: flex;
 }
 
-#register-form > div > button {
+#register-form-buttons > button {
     flex-basis: 100%;
     transition: flex-basis 0.5s;
 }
 
-#register-form > div > button.shrink {
+#register-form-buttons > button.shrink {
     flex-basis: 50%;
     transition: flex-basis 0.5s;
 }
 
-#register-form > div > button.shrink:first-child {
+#register-form-buttons > button.shrink:first-child {
     margin-right: 2px;
 }
 
-#register-form > div > button.shrink:last-child {
+#register-form-buttons > button.shrink:last-child {
     margin-right: 2px;
+}
+
+div.hidden {
+    display: none;
+}
+
+div > .register-input-label {
+    display: flex;
+    justify-content: space-between;
+}
+
+div > .register-input-label > p {
+    margin: 0;
+    color: var(--error-color);
+}
+
+div > .register-input-label > p.hidden {
+    display: none;
 }

@@ -47,6 +47,9 @@ app.config['AVATAR_UPLOAD_FOLDER'] = os.path.join(
     os.path.dirname( __file__ ), '..', 'frontend', 'static', 'images', 'avatars'
 )
 
+# Request content length maximum 1MB
+app.config['MAX_CONTENT_LENGTH'] = 1_000_000
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.app_context().push()
 

@@ -305,6 +305,7 @@ def upload_profile_picture():
 
             Student.setAvatarFilename(student.email, avatarFilename)
 
+            flash("Avatar uploaded", "success")
             return redirect(url_for("profile_get"))
         except RequestEntityTooLarge:
             flash("File size too large", "error")

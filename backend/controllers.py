@@ -304,9 +304,17 @@ def upload_profile_picture():
             if not os.path.exists(app.config["AVATAR_UPLOAD_FOLDER"]):
                 os.makedirs(app.config["AVATAR_UPLOAD_FOLDER"])
 
+            # If user already has an avatar, delete it
+            if student.avatarFilename:
+                oldAvatarFilePath = os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], student.avatarFilename)
+                if os.path.exists(oldAvatarFilePath):
+                    os.remove(oldAvatarFilePath)
+
             # User's avatar saved as static/images/avatars/<id>.<extension>
             avatarFilename = str(student._id) + "." + filename_extension
-            file.save(os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], avatarFilename))
+            avatarFilePath = os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], avatarFilename)
+
+            file.save(avatarFilePath)
 
             Student.setAvatarFilename(student.email, avatarFilename)
 

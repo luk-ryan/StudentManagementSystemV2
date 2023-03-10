@@ -1,6 +1,9 @@
+import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from backend.models import Student, Course, Evaluation
+from werkzeug.utils import secure_filename
+from werkzeug.exceptions import RequestEntityTooLarge
 
 from backend import app
 
@@ -258,6 +261,56 @@ def update_profile():
         return redirect(url_for("profile_get"))
     else:
         flash(f"You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
+@app.route("/student/avatar", methods = ["POST"])
+def upload_profile_picture():
+    if "EMAIL" in session:
+        try:
+            if "file" not in request.files:
+                flash("No file found in form", "error")
+                return redirect(url_for("profile_get"))
+
+            file = request.files["file"]
+
+            if file.filename == "":
+                flash("No file uploaded", "error")
+                return redirect(url_for("profile_get"))
+
+            if "." not in file.filename:
+                flash("Invalid filename: no file extension", "error")
+                return redirect(url_for("profile_get"))
+
+            filename_extension = file.filename.rsplit(".", 1)[1].lower()
+
+            if filename_extension == "jpg":
+                filename_extension = "jpeg"
+
+            allowable_file_types = ["png", "jpg", "jpeg", "gif"]
+
+            if filename_extension not in allowable_file_types:
+                flash("Invalid file type. Allowed types: " + str(allowable_file_types), "error")
+                return redirect(url_for("profile_get"))
+
+            if "image/" + filename_extension != file.mimetype:
+                flash("File extension does not match its mimetype", "error")
+                return redirect(url_for("profile_get"))
+
+            student = Student.getStudentByEmail(session["EMAIL"])
+
+            # User's avatar saved as static/images/avatars/<id>.<extension>
+            avatarFilename = str(student._id) + "." + filename_extension
+            file.save(os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], avatarFilename))
+
+            Student.setAvatarFilename(student.email, avatarFilename)
+
+            return redirect(url_for("profile_get"))
+        except RequestEntityTooLarge:
+            flash("File size too large", "error")
+            return redirect(url_for("profile_get"))
+    else:
+        flash("You are not logged in", "error")
         return redirect(url_for("login_get"))
 
 

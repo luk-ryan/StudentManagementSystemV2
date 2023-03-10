@@ -8,6 +8,11 @@
     border: 1px solid var(--text-color);
 }
 
+.profile-section img {
+    width: 100px;
+    height: 100px;
+}
+
 .profile-form-inputs {
     display: grid;
     grid-template-columns: 1fr 2fr;

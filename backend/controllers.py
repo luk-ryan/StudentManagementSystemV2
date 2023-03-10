@@ -314,6 +314,22 @@ def upload_profile_picture():
         return redirect(url_for("login_get"))
 
 
+@app.route("/student/avatar/delete", methods = ["POST"])
+def delete_avatar():
+    if "EMAIL" in session:
+        student = Student.getStudentByEmail(session["EMAIL"])
+
+        os.remove(os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], student.avatarFilename))
+
+        Student.removeAvatarFilename(student.email)
+
+        flash("Avatar deleted", "success")
+        return redirect(url_for("profile_get"))
+    else:
+        flash("You are not logged in", "error")
+        return redirect(url_for("login_get"))
+
+
 @app.route("/student/password", methods = ["POST"])
 def change_password():
     '''

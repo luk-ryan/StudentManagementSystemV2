@@ -137,6 +137,12 @@ class Student(db.Model):
         db.session.commit()
 
 
+    def removeAvatarFilename(email: str):
+        student = Student.query.filter_by(email = email).first()
+        student.avatarFilename = None
+        db.session.commit()
+
+
     def addCourse(course_code, course_name, student_email, course_credits):
         student = Student.query.filter_by(email = student_email).first()
         course = Course(course_code, course_name, student._id, course_credits)

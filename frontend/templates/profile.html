@@ -13,15 +13,21 @@
     <div class="profile-section">
         <h2>Avatar</h2>
         <p>View, edit, or delete your avatar.</p>
-        {% if 'avatarFilename' in student %}
+        {% if 'avatarFilename' in student and student['avatarFilename'] != none %}
             <img src="/static/images/avatars/{{ student['avatarFilename'] }}">
+            <form action="/student/avatar" method="POST" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <button type="submit">Upload</button>
+            </form>
+            <form action="/student/avatar/delete" method="POST">
+                <button type="submit">Delete Avatar</button>
+            </form>
         {% else %}
-            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Image_not_available.png">
+            <form action="/student/avatar" method="POST" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <button type="submit">Upload</button>
+            </form>
         {% endif %}
-        <form action="/student/avatar" method="POST" enctype="multipart/form-data">
-            <input name="file" type="file">
-            <button type="submit">Upload</button>
-        </form>
         <hr>
     </div>
     <div class="profile-section">

@@ -299,6 +299,11 @@ def upload_profile_picture():
 
             student = Student.getStudentByEmail(session["EMAIL"])
 
+            # Make the avatar folder in the file system if it does not already exist.
+            # Otherwise, there will be an error when saving the file.
+            if not os.path.exists(app.config["AVATAR_UPLOAD_FOLDER"]):
+                os.makedirs(app.config["AVATAR_UPLOAD_FOLDER"])
+
             # User's avatar saved as static/images/avatars/<id>.<extension>
             avatarFilename = str(student._id) + "." + filename_extension
             file.save(os.path.join(app.config["AVATAR_UPLOAD_FOLDER"], avatarFilename))

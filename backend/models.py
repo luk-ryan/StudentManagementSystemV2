@@ -23,6 +23,7 @@ class Student(db.Model):
     creditsCompleted = db.Column(db.Float, nullable = False)
     creditsToGraduate = db.Column(db.Float, nullable = False)
     gpa = db.Column(db.Float)
+    avatarFilename = db.Column(db.String(100))
     courses = db.relationship("Course", backref="student")
 
 
@@ -54,6 +55,7 @@ class Student(db.Model):
             "creditsCompleted": self.creditsCompleted,
             "creditsToGraduate": self.creditsToGraduate,
             "gpa": self.gpa,
+            "avatarFilename": self.avatarFilename,
             "courses": self.courses
         }
 
@@ -126,6 +128,12 @@ class Student(db.Model):
             student.firstName = studentValues["firstName"]
             student.lastName = studentValues["lastName"]
             student.school = studentValues["school"]
+        db.session.commit()
+
+
+    def setAvatarFilename(email: str, avatarFilename: str):
+        student = Student.query.filter_by(email = email).first()
+        student.avatarFilename = avatarFilename
         db.session.commit()
 
 

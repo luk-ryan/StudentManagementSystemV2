@@ -13,13 +13,13 @@ db = SQLAlchemy(app)
 
 class Student(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
-    firstName = db.Column(db.String(100), nullable = False)
-    lastName = db.Column(db.String(100), nullable = False)
-    email = db.Column(db.String(100), unique = True, nullable = False)
-    password = db.Column(db.String(100), nullable = False)
-    school = db.Column(db.String(100))
-    program = db.Column(db.String(100))
-    year = db.Column(db.String(100))
+    firstName = db.Column(db.String(20), nullable = False)
+    lastName = db.Column(db.String(20), nullable = False)
+    email = db.Column(db.String(50), unique = True, nullable = False)
+    password = db.Column(db.String(20), nullable = False)
+    school = db.Column(db.String(50))
+    program = db.Column(db.String(50))
+    year = db.Column(db.String(20))
     creditsCompleted = db.Column(db.Float, nullable = False)
     creditsToGraduate = db.Column(db.Float, nullable = False)
     gpa = db.Column(db.Float)
@@ -37,10 +37,8 @@ class Student(db.Model):
         self.creditsCompleted = 0.0
         self.creditsToGraduate = creditsToGraduate
 
-
     def __repr__(self):
         return '<Student %r>' % self.email
-
 
     def toDict(self):
         return {
@@ -101,9 +99,11 @@ class Student(db.Model):
         fName = student.firstName
         return fName
 
+
     def getStudentByEmail(email):
         return Student.query.filter_by(email = email).first()
     
+
     def calculate(student_id):
         student = Student.query.filter_by(_id = student_id).first()
 
@@ -115,6 +115,7 @@ class Student(db.Model):
         student.gpa = sumOfGradePoints / student.creditsCompleted
         
         db.session.commit()
+
 
     def updateStudent(email: str, studentValues: dict):
         student = Student.query.filter_by(email = email).first()
@@ -153,14 +154,17 @@ class Student(db.Model):
         db.session.commit()
 
 
+
 class Course(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     code = db.Column(db.String(100), nullable = False)
     name =  db.Column(db.String(100), nullable = False)
-    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     credits = db.Column(db.Float)
     gradePoint = db.Column(db.Float)
-    trashed = db.Column(db.Boolean, default = False, nullable = False) 
+    trashed = db.Column(db.Boolean, default = False, nullable = False)
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+    semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"))
+    evaluations = db.relationship("Evaluation", backref = "course")
 
 
     def __init__(self, code, name, studentId, credits):
@@ -169,27 +173,43 @@ class Course(db.Model):
         self.studentId = studentId
         self.credits = credits
 
+
+    def toDict(self):
+        student = Student.query.filter_by(_id = self.studentId).first()
+        semester = Semester.query.filter_by(_id = self.semesterId).first()
+        return {
+            "id": self._id,
+            "code": self.code,
+            "name": self.name,
+            "credits": self.credits,
+            "gradePoint": self.gradePoint,
+            "studentName": (student.firstName + " " + student.lastName),
+            "semester": semester.displayName,
+            "courses": self.courses
+        }
+
+
     def getCourseById(id):
         return Course.query.filter_by(_id = id, trashed = False).first()
 
 
     def calculate(course_Id):
         course = Course.query.filter_by(_id = course_Id, trashed = False).first()
-        evaluations = Evaluation.getEvaluations(course_Id)
 
         sumOfWeights = 0
         sumOfGrades = 0
 
-        for e in evaluations:
-            sumOfWeights += e.weight
-            sumOfGrades += (e.weight * e.grade)
+        for evaluation in course.evaluations:
+            sumOfWeights += evaluation.weight
+            sumOfGrades += (evaluation.weight * evaluation.grade)
             
         finalGrade = sumOfGrades/sumOfWeights
 
         course.gradePoint = Course.convertGradePoint(finalGrade*100)
         Student.calculate(Student.query.filter_by(_id = course.studentId).first()._id)
         db.session.commit()
-            
+
+
     def convertGradePoint(grade): 
 
         if (grade >= 93):
@@ -215,10 +235,12 @@ class Course(db.Model):
         else:
             return 0.0
 
+
     def getCourses(student_email):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
         return Course.query.filter_by(studentId = student_id, trashed = False)
+
 
     def addEvaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id):
         evaluation = Evaluation(evaluation_name, evaluation_grade, evaluation_weight, course_id)
@@ -231,12 +253,13 @@ class Course(db.Model):
         return evaluation
 
 
+
 class Evaluation(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     name =  db.Column(db.String(100), nullable = False)
     grade = db.Column(db.Float)
     weight = db.Column(db.Float, nullable = False)
-    courseId = db.Column(db.Integer, nullable = False)
+    courseId = db.Column(db.Integer, db.ForeignKey("course.id"), nullable = False)
 
     def __init__(self, name, grade, weight, courseId):
         self.name = name
@@ -247,3 +270,28 @@ class Evaluation(db.Model):
 
     def getEvaluations(course_id):
         return Evaluation.query.filter_by(courseId = course_id).all()
+
+
+
+class Semester(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    displayName = db.Column(db.String(20), nullable = False)
+    startDate = db.Column(db.DateTime, nullable = False)
+    endDate = db.Column(db.DateTime, nullable = False)
+    courses = db.relationship("Course", backref = "semester")
+
+
+    def __init__(self, displayName, startDate, endDate):
+        self.displayName = displayName
+        self.startDate = startDate
+        self.endDate = endDate
+
+
+    def toDict(self):
+        return {
+            "id": self._id,
+            "displayName": self.displayName,
+            "startDate": self.startDate,
+            "endDate": self.endDate,
+            "courses": self.courses
+        }

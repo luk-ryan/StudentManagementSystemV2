@@ -43,6 +43,10 @@ else:
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+app.config['AVATAR_UPLOAD_FOLDER'] = os.path.join(
+    os.path.dirname( __file__ ), '..', 'frontend', 'static', 'images', 'avatars'
+)
+
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 app.app_context().push()
 

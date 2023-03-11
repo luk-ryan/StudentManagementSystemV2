@@ -47,6 +47,10 @@
     margin-top: 10px;
 }
 
+#add-course-button.left-side {
+    justify-content: flex-start;
+}
+
 #add-course-button > button {
     display: flex;
     align-items: center;

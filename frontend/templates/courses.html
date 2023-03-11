@@ -42,13 +42,11 @@
     {% else %}
         <div id="courses" class="block">
             <h2 class="block">No Courses Yet</h2>
-            <div id="course-list" class="block">
-                <div>
+            <div id="add-course-button" class="block left-side">
+                <button onclick="openAddCourseModal()">
                     <p>Add Your First Course</p>
-                    <button class="icon-button" onclick="openAddCourseModal()">
-                        <img src="static/svg/plus.svg">
-                    </button>
-                </div>
+                    <img src="static/svg/plus.svg">
+                </button>
             </div>
         </div>
     {% endif %}

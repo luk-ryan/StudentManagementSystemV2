@@ -41,9 +41,30 @@
     cursor: pointer;
 }
 
-.course-add-form > form {
-    max-width: 750px;
-    margin: auto;
+#add-course-button {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#add-course-button > button {
+    display: flex;
+    align-items: center;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+    font-weight: bold;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+#add-course-button > button:hover {
+    filter: brightness(1.3);
+}
+
+#add-course-button > button > p {
+    font-size: var(--subheading-font-size);
+    margin: 0;
 }
 
 #course-add-modal {

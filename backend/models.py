@@ -40,21 +40,6 @@ class Student(db.Model):
     def __repr__(self):
         return '<Student %r>' % self.email
 
-    def toDict(self):
-        return {
-            "id": self._id,
-            "firstName": self.firstName,
-            "lastName": self.lastName,
-            "email": self.email,
-            "school": self.school,
-            "program": self.program,
-            "year": self.year,
-            "creditsCompleted": self.creditsCompleted,
-            "creditsToGraduate": self.creditsToGraduate,
-            "gpa": self.gpa,
-            "courses": self.courses
-        }
-
 
     def validateAndHashPassword(password: str, confirmPassword: str):
         if (len(password) < 5):
@@ -172,22 +157,7 @@ class Course(db.Model):
         self.name = name
         self.studentId = studentId
         self.credits = credits
-
-
-    def toDict(self):
-        student = Student.query.filter_by(_id = self.studentId).first()
-        semester = Semester.query.filter_by(_id = self.semesterId).first()
-        return {
-            "id": self._id,
-            "code": self.code,
-            "name": self.name,
-            "credits": self.credits,
-            "gradePoint": self.gradePoint,
-            "studentName": (student.firstName + " " + student.lastName),
-            "semester": semester.displayName,
-            "courses": self.courses
-        }
-
+        
 
     def getCourseById(id):
         return Course.query.filter_by(_id = id, trashed = False).first()
@@ -285,13 +255,3 @@ class Semester(db.Model):
         self.displayName = displayName
         self.startDate = startDate
         self.endDate = endDate
-
-
-    def toDict(self):
-        return {
-            "id": self._id,
-            "displayName": self.displayName,
-            "startDate": self.startDate,
-            "endDate": self.endDate,
-            "courses": self.courses
-        }

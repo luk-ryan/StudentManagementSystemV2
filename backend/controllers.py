@@ -48,7 +48,7 @@ def home():
 
     if "NAME" in session:
         student = Student.getStudentByEmail(session["EMAIL"])
-        return render_template("student.html", student = student.toDict())
+        return render_template("student.html", student = student)
     else:
         return render_template("home.html")
 
@@ -145,7 +145,7 @@ def course_get():
     if "NAME" in session:
         courses = Course.getCourses(session["EMAIL"])
         student = Student.getStudentByEmail(session["EMAIL"])
-        return render_template("courses.html", student = student.toDict(), courses = list(courses))
+        return render_template("courses.html", student = student, courses = list(courses))
 
     # redirects back to login if they are not logged in the session
     else:
@@ -234,7 +234,7 @@ def profile_get():
 
     if "EMAIL" in session:
         student = Student.getStudentByEmail(session["EMAIL"])
-        return render_template("profile.html", student = student.toDict())
+        return render_template("profile.html", student = student)
     else:
         flash(f"You are not logged in", "error")
         return redirect(url_for("login_get"))

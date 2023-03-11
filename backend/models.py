@@ -13,17 +13,17 @@ db = SQLAlchemy(app)
 
 class Student(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
-    firstName = db.Column(db.String(20), nullable = False)
-    lastName = db.Column(db.String(20), nullable = False)
+    firstName = db.Column(db.String(50), nullable = False)
+    lastName = db.Column(db.String(50), nullable = False)
     email = db.Column(db.String(50), unique = True, nullable = False)
-    password = db.Column(db.String(20), nullable = False)
+    password = db.Column(db.String(64), nullable = False)
     school = db.Column(db.String(50))
     program = db.Column(db.String(50))
-    year = db.Column(db.String(20))
+    year = db.Column(db.String(50))
     creditsCompleted = db.Column(db.Float, nullable = False)
     creditsToGraduate = db.Column(db.Float, nullable = False)
     gpa = db.Column(db.Float)
-    avatarFilename = db.Column(db.String(100))
+    avatarFilename = db.Column(db.String(50))
     courses = db.relationship("Course", backref="student")
 
 
@@ -67,7 +67,7 @@ class Student(db.Model):
         found = Student.query.filter_by(email = email).first()
         if not found:
 
-            hashed_password = bcrypt.generate_password_hash(password)
+            hashed_password = bcrypt.generate_password_hash(password).decode("utf-8")
             acc = Student(first, last, email, hashed_password, school, program, year, creditsToGraduate)
             db.session.add(acc)
             db.session.commit()

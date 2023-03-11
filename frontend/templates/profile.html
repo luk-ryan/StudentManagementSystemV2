@@ -11,6 +11,26 @@
     {% endwith %}
     <h1>{{ student['firstName'] }} {{ student['lastName'] }}'s Profile</h1>
     <div class="profile-section">
+        <h2>Avatar</h2>
+        <p>View, edit, or delete your avatar.</p>
+        {% if 'avatarFilename' in student and student['avatarFilename'] != none %}
+            <img src="/static/images/avatars/{{ student['avatarFilename'] }}">
+            <form action="/student/avatar" method="POST" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <button type="submit">Upload</button>
+            </form>
+            <form action="/student/avatar/delete" method="POST">
+                <button type="submit">Delete Avatar</button>
+            </form>
+        {% else %}
+            <form action="/student/avatar" method="POST" enctype="multipart/form-data">
+                <input name="file" type="file">
+                <button type="submit">Upload</button>
+            </form>
+        {% endif %}
+        <hr>
+    </div>
+    <div class="profile-section">
         <h2>Account Details</h2>
         <p>View and edit your account details.</p>
         <form action="/student" method="POST">

@@ -8,5 +8,8 @@ backend/.env
 # Virtual environment
 venv/
 
+# Folder for user avatars
+frontend/static/images/avatars
+
 # IDE configurations
 .vscode/

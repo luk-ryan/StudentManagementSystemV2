@@ -10,6 +10,7 @@
 
 #courses-table th {
     text-align: left;
+    font-size: var(--subheading-font-size);
 }
 
 #courses-table tr {

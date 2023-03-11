@@ -34,10 +34,8 @@ app = Flask(
     static_folder=static_folder
 )
 
-db_string = os.getenv('db_string')
-
-if db_string:
-    app.config['SQLALCHEMY_DATABASE_URI'] = db_string
+if os.getenv('DB_STRING'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_STRING')
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../db.sqlite'
 

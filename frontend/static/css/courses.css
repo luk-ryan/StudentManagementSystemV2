@@ -3,32 +3,38 @@
     font-size: var(--title-font-size);
 }
 
-#course-list .link {
+#courses-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#courses-table th {
+    text-align: left;
+}
+
+#courses-table tr {
+    border-bottom: 1px solid var(--text-color);
+}
+
+#courses-table td {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#courses-table .link {
     font-size: var(--subheading-font-size);
 }
 
-#course-list {
-    margin-bottom: 10px;
+#courses-table td:last-child {
+    width: 1px;
+    white-space: nowrap;
 }
 
-#course-list > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-top: 1px solid var(--text-color);
-}
-
-#course-list > div:last-child {
-    font-size: var(--subheading-font-size);
-}
-
-.light-theme #course-list .icon-button {
+.light-theme #courses-table .icon-button {
     filter: invert(0);
 }
 
-#course-list .icon-button {
+#courses-table .icon-button {
     background-color: transparent;
     border: none;
     filter: invert(1);

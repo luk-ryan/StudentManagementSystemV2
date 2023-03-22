@@ -10,37 +10,43 @@
         {% endif %}
     {% endwith %}
     {% if courses is defined and courses|length > 0 %}
-        <div id="courses">
-            <h2 class="block">Courses</h2>
-            <div id="course-list" class="block">
+        <div id="courses" class="block">
+            <h2>Courses</h2>
+            <table id="courses-table">
+                <tr>
+                    <th>Course Code and Name</th>
+                    <th>GPA</th>
+                    <th>Credits</th>
+                    <th></th>
+                </tr>
                 {% for course in courses %}
-                    <div>
-                        <a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a>
-                        <p>Grade Point: {{course.gradePoint}}</p>
-                        <p>Credits: {{course.credits}}</p>
-                        <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
-                            <img src="static/svg/trash.svg">
-                        </button>
-                    </div>
+                    <tr>
+                        <td><a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a></td>
+                        <td>{{ course.gradePoint }}</td>
+                        <td>{{ course.credits }}</td>
+                        <td>
+                            <button class="icon-button" onclick="removeCourse(this, '{{ course._id }}' )">
+                                <img src="static/svg/trash.svg">
+                            </button>
+                        </td>
+                    </tr>
                 {% endfor %}
-                <div>
+            </table>
+            <div id="add-course-button" class="block">
+                <button class="icon-button" onclick="openAddCourseModal()">
                     <p>Add New Course</p>
-                    <button class="icon-button" onclick="openAddCourseModal()">
-                        <img src="static/svg/plus.svg">
-                    </button>
-                </div>
+                    <img src="static/svg/plus.svg">
+                </button>
             </div>
         </div>
     {% else %}
-        <div id="courses">
+        <div id="courses" class="block">
             <h2 class="block">No Courses Yet</h2>
-            <div id="course-list" class="block">
-                <div>
+            <div id="add-course-button" class="block left-side">
+                <button onclick="openAddCourseModal()">
                     <p>Add Your First Course</p>
-                    <button class="icon-button" onclick="openAddCourseModal()">
-                        <img src="static/svg/plus.svg">
-                    </button>
-                </div>
+                    <img src="static/svg/plus.svg">
+                </button>
             </div>
         </div>
     {% endif %}

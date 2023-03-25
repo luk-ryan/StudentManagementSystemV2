@@ -63,7 +63,7 @@
                 <br>
                 <input type="number" name="credits" placeholder="Credits">
                 <br>
-                <select name="semester">
+                <select id="semester-select-dropdown" name="semester">
                     {% for semester in semesters %} 
                         <option value="{{semester._id}}"> {{semester.displayName}}</option>
                     {% endfor %}

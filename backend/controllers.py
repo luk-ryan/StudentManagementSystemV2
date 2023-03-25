@@ -223,8 +223,11 @@ def semester_post():
     end_date = request.form["end date"]
 
     try:
-        Student.addSemester(display_name, start_date, end_date, session["EMAIL"])
-        return "", 204
+        semester = Student.addSemester(display_name, start_date, end_date, session["EMAIL"])
+        return {
+            "semester_id": semester._id,
+            "semester_displayName": semester.displayName
+        }, 201
     except Exception as err:
         return str(err), 400
 
@@ -249,7 +252,7 @@ def evaluation_post():
         "evaluation_name": evaluation.name,
         "evaluation_grade": evaluation.grade,
         "evaluation_weight": evaluation.weight
-    }
+    }, 201
 
 
 @app.route("/profile", methods = ["GET"])

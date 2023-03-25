@@ -159,6 +159,8 @@ class Student(db.Model):
         db.session.add(semester)
         db.session.commit()
 
+        return semester
+
 
     def deleteStudent(email: str):
         student = Student.query.filter_by(email = email).first()

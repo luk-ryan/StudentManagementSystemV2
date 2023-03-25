@@ -56,7 +56,21 @@ async function addSemester() {
         const response = await fetch(`/semester`, { method:"POST", body: new FormData(semesterForm) });
 
         if (response.status >= 200 && response.status < 300) {
-            alert("success!");
+            const semester = await response.json();
+
+            // Get semester dropdown
+            const semesterDropdown = document.getElementById("semester-select-dropdown");
+
+            // Create new option
+            const newSemesterOption = document.createElement("option");
+
+            newSemesterOption.setAttribute("value", semester.semester_id);
+            newSemesterOption.appendChild(document.createTextNode(semester.semester_displayName));
+            semesterDropdown.appendChild(newSemesterOption);
+
+            // Clear the inputs
+            semesterForm.querySelectorAll("input").forEach(input => input.value = "")
+
         } 
         else {
             alert(await response.text());

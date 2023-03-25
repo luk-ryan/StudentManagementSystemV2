@@ -130,9 +130,9 @@ class Student(db.Model):
         db.session.commit()
 
 
-    def addCourse(course_code, course_name, student_email, course_credits):
+    def addCourse(course_code, course_name, student_email, course_credits, semester_Id):
         student = Student.query.filter_by(email = student_email).first()
-        course = Course(course_code, course_name, student._id, course_credits)
+        course = Course(course_code, course_name, student._id, course_credits, semester_Id)
 
         student.creditsCompleted += float(course_credits)
 
@@ -181,11 +181,12 @@ class Course(db.Model):
     evaluations = db.relationship("Evaluation", backref = "course")
 
 
-    def __init__(self, code, name, studentId, credits):
+    def __init__(self, code, name, studentId, credits, semesterId):
         self.code = code
         self.name = name
-        self.studentId = studentId
         self.credits = credits
+        self.studentId = studentId
+        self.semesterId = semesterId
         
 
     def getCourseById(id):

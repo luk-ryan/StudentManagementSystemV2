@@ -166,8 +166,9 @@ def course_post():
     course_code = request.form["course code"]
     course_name = request.form["course name"]
     course_credits = request.form["credits"]
+    course_semesterId = request.form["semester id"]
 
-    Student.addCourse(course_code, course_name, session["EMAIL"], course_credits)
+    Student.addCourse(course_code, course_name, session["EMAIL"], course_credits, course_semesterId)
 
     return redirect(url_for("course_get"))
 

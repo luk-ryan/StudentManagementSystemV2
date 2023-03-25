@@ -15,6 +15,7 @@
             <table id="courses-table">
                 <tr>
                     <th>Course Code and Name</th>
+                    <th>Semester</th>
                     <th>GPA</th>
                     <th>Credits</th>
                     <th></th>
@@ -22,6 +23,7 @@
                 {% for course in courses %}
                     <tr>
                         <td><a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a></td>
+                        <td>{{ course.semester.id,displayName }}</td>
                         <td>{{ course.gradePoint }}</td>
                         <td>{{ course.credits }}</td>
                         <td>
@@ -63,7 +65,7 @@
                 <br>
                 <input type="number" name="credits" placeholder="Credits">
                 <br>
-                <select id="semester-select-dropdown" name="semester">
+                <select id="semester-select-dropdown" name="semester id">
                     {% for semester in semesters %} 
                         <option value="{{semester._id}}"> {{semester.displayName}}</option>
                     {% endfor %}

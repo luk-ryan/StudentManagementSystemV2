@@ -49,7 +49,7 @@
                 </button>
             </div>
         </div>
-    {% endif %}
+    {% endif %}    
     <div id="course-add-modal">
         <div>
             <div>
@@ -57,14 +57,31 @@
                 <h2>Add New Course</h2>
             </div>
             <form action="/course" method="post">
-                <input type="text" id="course code" name="course code" placeholder="Course Code">
+                <input type="text" name="course code" placeholder="Course Code">
                 <br>
-                <input type="text" id="course name" name="course name" placeholder="Course Name">
+                <input type="text" name="course name" placeholder="Course Name">
                 <br>
-                <input type="number" id="credits" name="credits" placeholder="Credits">
+                <input type="number" name="credits" placeholder="Credits">
+                <br>
+                <select name="semester">
+                    {% for semester in semesters %} 
+                        <option value="{{semester._id}}"> {{semester.displayName}}</option>
+                    {% endfor %}
+                </select>
                 <br>
                 <button type="submit">Add Course</button>
             </form>
         </div>
+    </div>
+    <div>
+        <form id="form-add-semester">
+            <input type="text" name="display name" placeholder="Semester">
+            <br>
+            <input type="date" name="start date">
+            <br>
+            <input type="date" name="end date">
+            <br>        
+        </form>
+        <button onclick="addSemester()">Add Semester</button>
     </div>
 {% endblock content %}

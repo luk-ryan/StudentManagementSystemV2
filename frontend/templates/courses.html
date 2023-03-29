@@ -23,7 +23,7 @@
                 {% for course in courses %}
                     <tr>
                         <td><a class="link" href="/course/{{course._id}}"><b>{{course.code}}</b> {{course.name}}</a></td>
-                        <td>{{ course.semester.id,displayName }}</td>
+                        <td>{{ course.semester.displayName }}</td>
                         <td>{{ course.gradePoint }}</td>
                         <td>{{ course.credits }}</td>
                         <td>

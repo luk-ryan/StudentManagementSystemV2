@@ -13,7 +13,7 @@
     <div class="profile-section">
         <h2>Avatar</h2>
         <p>View, edit, or delete your avatar.</p>
-        {% if 'avatarFilename' in student and student['avatarFilename'] != none %}
+        {% if student['avatarFilename'] != none %}
             <img src="/static/images/avatars/{{ student['avatarFilename'] }}">
             <form action="/student/avatar" method="POST" enctype="multipart/form-data">
                 <input name="file" type="file">

@@ -50,6 +50,7 @@ window.onclick = function(event) {
  */
 async function addSemester() {
     const semesterForm = document.getElementById("form-add-semester");
+    const errorMessage = document.getElementById("semester-add-modal-message");
 
     try {
         // Add Semester into Database
@@ -69,14 +70,43 @@ async function addSemester() {
             semesterDropdown.appendChild(newSemesterOption);
 
             // Clear the inputs
-            semesterForm.querySelectorAll("input").forEach(input => input.value = "")
-
-        } 
+            semesterForm.querySelectorAll("input").forEach(input => input.value = "");
+            errorMessage.innerHTML = "";
+            errorMessage.style.display = "none";
+            closeAddSemesterModal();
+            document.getElementById("course-add-modal-message").style.display = "block";
+            document.getElementById("course-add-modal-message").innerHTML = "Semester Added Successfully";
+        }
         else {
-            alert(await response.text());
+            errorMessage.style.display = "block";
+            errorMessage.innerHTML = await response.text();
         }
     } 
     catch (err) {
-        alert(err.message);
+        errorMessage.style.display = "block";
+        errorMessage.innerHTML = err.message;
+    }
+}
+
+/**
+ * Opens the add Semester modal.
+ */
+function openAddSemesterModal() {
+    const addSemesterModal = document.getElementById("semester-add-modal");
+    addSemesterModal.style.display = "block";
+}
+
+/**
+ * Closes the add Semester modal.
+ */
+function closeAddSemesterModal() {
+    const addSemesterModal = document.getElementById("semester-add-modal");
+    addSemesterModal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    const addSemesterModal = document.getElementById("semester-add-modal");
+    if (event.target == addSemesterModal) {
+        closeAddSemesterModal();
     }
 }

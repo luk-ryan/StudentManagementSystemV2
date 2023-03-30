@@ -177,7 +177,7 @@ class Course(db.Model):
     gradePoint = db.Column(db.Float)
     trashed = db.Column(db.Boolean, default = False, nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
-    semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"))
+    semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"), nullable = False)
     evaluations = db.relationship("Evaluation", backref = "course")
 
 

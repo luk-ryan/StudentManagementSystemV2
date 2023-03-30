@@ -72,6 +72,10 @@
     margin: 0;
 }
 
+/*
+ * Course Add Modal Styles
+ */
+
 #course-add-modal {
     display: none;
     position: fixed;
@@ -117,6 +121,12 @@
     filter: brightness(1.3);
 }
 
+#course-add-modal-message {
+    display: none;
+    margin: auto;
+    width: 80%;
+}
+
 #course-add-modal form {
     display: flex;
     align-items: center;
@@ -138,12 +148,93 @@
     margin-top: 20px;
 }
 
-#course-add-modal button {
+/*
+ * Semester Add Modal Styles
+ */
+
+#semester-add-modal {
+    display: none;
+    position: fixed;
+    z-index: 2;
+    padding-top: 400px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+#semester-add-modal > div {
+    position: relative;
+    margin-left: auto;
+    margin-right: 26%;
+    width: 18%;
+    border-radius: 5px;
+    background-color: var(--background-color);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
+}
+
+#semester-add-modal h2 {
+    text-align: center;
+    padding: 8px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+#semester-add-modal span {
+    color: var(--accent-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#semester-add-modal span:hover {
+    filter: brightness(1.3);
+}
+
+#semester-add-modal-message {
+    display: none;
+    margin: auto;
+    margin-bottom: 10px;
+    font-size: 18px;
+    width: 80%;
+}
+
+#semester-add-modal form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#semester-add-modal input {
+    width: 75%;
+    height: 40px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-family: var(--paragraph-font-family);
+    font-size: var(--paragraph-font-size);
+}
+
+#semester-add-modal input:first-child {
+    margin-top: 10px;
+}
+
+/*
+ * Submit button for both Modals
+ */
+
+#submit-modal-button {
     display: block;
     width: 100%;
     border: none;
     text-align: center;
-    padding: 15px;
     background-color: var(--accent-color);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -152,8 +243,17 @@
     color: var(--text-color);
     font-size: var(--subheading-font-size);
     font-weight: bold;
+    cursor: pointer;
 }
 
-#course-add-modal button:hover {
+#course-add-modal #submit-modal-button {
+    padding: 15px;
+}
+
+#semester-add-modal #submit-modal-button {
+    padding: 10px;
+}
+
+#submit-modal-button:hover {
     filter: brightness(1.3);
 }

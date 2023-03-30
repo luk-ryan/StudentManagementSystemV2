@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course, Evaluation
+from backend.models import Student, Course, Evaluation, Semester
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 
@@ -146,9 +146,10 @@ def course_get():
     '''
 
     if "NAME" in session:
-        courses = Course.getCourses(session["EMAIL"])
         student = Student.getStudentByEmail(session["EMAIL"])
-        return render_template("courses.html", student = student, courses = list(courses))
+        courses = Course.getCourses(session["EMAIL"])
+        semesters = Semester.getSemesters(session["EMAIL"])
+        return render_template("courses.html", student = student, courses = list(courses), semesters = list(semesters))
 
     # redirects back to login if they are not logged in the session
     else:
@@ -165,8 +166,9 @@ def course_post():
     course_code = request.form["course code"]
     course_name = request.form["course name"]
     course_credits = request.form["credits"]
+    course_semesterId = request.form["semester id"]
 
-    Student.addCourse(course_code, course_name, session["EMAIL"], course_credits)
+    Student.addCourse(course_code, course_name, session["EMAIL"], course_credits, course_semesterId)
 
     return redirect(url_for("course_get"))
 
@@ -181,6 +183,7 @@ def course_delete(id):
     Student.removeCourse(request.view_args["id"])
 
     return "success"
+
 
 @app.route("/course/<id>", methods = ["GET"])
 def course_get_by_id(id):
@@ -206,6 +209,30 @@ def course_get_by_id(id):
             student = session["NAME"]
         )
 
+
+@app.route("/semester", methods = ["POST"])
+def semester_post():
+
+    '''
+    Adding Semester
+    '''
+
+    request.get_data()
+
+    display_name = request.form["display name"]
+    start_date = request.form["start date"]
+    end_date = request.form["end date"]
+
+    try:
+        semester = Student.addSemester(display_name, start_date, end_date, session["EMAIL"])
+        return {
+            "semester_id": semester._id,
+            "semester_displayName": semester.displayName
+        }, 201
+    except Exception as err:
+        return str(err), 400
+
+
 @app.route("/evaluation", methods = ["POST"])
 def evaluation_post():
 
@@ -226,7 +253,7 @@ def evaluation_post():
         "evaluation_name": evaluation.name,
         "evaluation_grade": evaluation.grade,
         "evaluation_weight": evaluation.weight
-    }
+    }, 201
 
 
 @app.route("/profile", methods = ["GET"])

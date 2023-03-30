@@ -25,6 +25,7 @@ class Student(db.Model):
     gpa = db.Column(db.Float)
     avatarFilename = db.Column(db.String(50))
     courses = db.relationship("Course", backref="student")
+    semesters = db.relationship("Semester", backref="student")
 
 
     def __init__(self, firstName, lastName, email, password, school, program, year, creditsToGraduate):
@@ -129,9 +130,9 @@ class Student(db.Model):
         db.session.commit()
 
 
-    def addCourse(course_code, course_name, student_email, course_credits):
+    def addCourse(course_code, course_name, student_email, course_credits, semester_Id):
         student = Student.query.filter_by(email = student_email).first()
-        course = Course(course_code, course_name, student._id, course_credits)
+        course = Course(course_code, course_name, student._id, course_credits, semester_Id)
 
         student.creditsCompleted += float(course_credits)
 
@@ -145,6 +146,20 @@ class Student(db.Model):
         trashed_course.trashed = True
         #Course.query.filter_by(_id = course_id).delete()
         db.session.commit()
+
+
+    def addSemester(display_name, start_date, end_date, student_email):
+
+        if end_date < start_date:
+            raise Exception("Start date must be before the end date!")
+
+        student = Student.query.filter_by(email = student_email).first()
+        semester = Semester(display_name, start_date, end_date, student._id)
+
+        db.session.add(semester)
+        db.session.commit()
+
+        return semester
 
 
     def deleteStudent(email: str):
@@ -162,15 +177,16 @@ class Course(db.Model):
     gradePoint = db.Column(db.Float)
     trashed = db.Column(db.Boolean, default = False, nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
-    semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"))
+    semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"), nullable = False)
     evaluations = db.relationship("Evaluation", backref = "course")
 
 
-    def __init__(self, code, name, studentId, credits):
+    def __init__(self, code, name, studentId, credits, semesterId):
         self.code = code
         self.name = name
-        self.studentId = studentId
         self.credits = credits
+        self.studentId = studentId
+        self.semesterId = semesterId
         
 
     def getCourseById(id):
@@ -262,10 +278,17 @@ class Semester(db.Model):
     displayName = db.Column(db.String(20), nullable = False)
     startDate = db.Column(db.DateTime, nullable = False)
     endDate = db.Column(db.DateTime, nullable = False)
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     courses = db.relationship("Course", backref = "semester")
 
 
-    def __init__(self, displayName, startDate, endDate):
+    def __init__(self, displayName, startDate, endDate, studentId):
         self.displayName = displayName
         self.startDate = startDate
         self.endDate = endDate
+        self.studentId = studentId
+
+    def getSemesters(student_email):
+        student_id = Student.query.filter_by(email = student_email).first()._id
+
+        return Semester.query.filter_by(studentId = student_id)

@@ -26,6 +26,7 @@ class Student(db.Model):
     avatarFilename = db.Column(db.String(50))
     courses = db.relationship("Course", backref="student")
     semesters = db.relationship("Semester", backref="student")
+    events = db.relationship("Event", backref = "student")
 
 
     def __init__(self, firstName, lastName, email, password, school, program, year, creditsToGraduate):
@@ -179,6 +180,7 @@ class Course(db.Model):
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     semesterId = db.Column(db.Integer, db.ForeignKey("semester.id"), nullable = False)
     evaluations = db.relationship("Evaluation", backref = "course")
+    events = db.relationship("Event", backref = "course")
 
 
     def __init__(self, code, name, studentId, credits, semesterId):
@@ -276,8 +278,8 @@ class Evaluation(db.Model):
 class Semester(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     displayName = db.Column(db.String(20), nullable = False)
-    startDate = db.Column(db.DateTime, nullable = False)
-    endDate = db.Column(db.DateTime, nullable = False)
+    startDate = db.Column(db.Date, nullable = False)
+    endDate = db.Column(db.Date, nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     courses = db.relationship("Course", backref = "semester")
 
@@ -292,3 +294,28 @@ class Semester(db.Model):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
         return Semester.query.filter_by(studentId = student_id)
+    
+
+
+class Event (db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    name = db.Column(db.String(20), nullable = False)
+    startTime = db.Column(db.DateTime, nullable = False)
+    endTime = db.Column(db.DateTime, nullable = False)
+    courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+
+    # constructor without course reference
+    def __init__(self, name, startTime, endTime, studentId):
+        self.name = name
+        self.startTime = startTime
+        self.endTime = endTime
+        self.studentId = studentId
+
+    # constructor with course reference
+    def __init__(self, name, startTime, endTime, studentId, courseId):
+        self.name = name
+        self.startTime = startTime
+        self.endTime = endTime
+        self.studentId = studentId
+        self.courseId = courseId

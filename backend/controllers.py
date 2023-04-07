@@ -185,6 +185,29 @@ def course_delete(id):
     return "success"
 
 
+@app.route("/semester", methods = ["POST"])
+def semester_post():
+
+    '''
+    Adding Semester
+    '''
+
+    request.get_data()
+
+    display_name = request.form["display name"]
+    start_date = request.form["start date"]
+    end_date = request.form["end date"]
+
+    try:
+        semester = Student.addSemester(display_name, start_date, end_date, session["EMAIL"])
+        return {
+            "semester_id": semester._id,
+            "semester_displayName": semester.displayName
+        }, 201
+    except Exception as err:
+        return str(err), 400
+
+
 @app.route("/course/<id>", methods = ["GET"])
 def course_get_by_id(id):
 
@@ -208,29 +231,6 @@ def course_get_by_id(id):
             course = course,
             student = session["NAME"]
         )
-
-
-@app.route("/semester", methods = ["POST"])
-def semester_post():
-
-    '''
-    Adding Semester
-    '''
-
-    request.get_data()
-
-    display_name = request.form["display name"]
-    start_date = request.form["start date"]
-    end_date = request.form["end date"]
-
-    try:
-        semester = Student.addSemester(display_name, start_date, end_date, session["EMAIL"])
-        return {
-            "semester_id": semester._id,
-            "semester_displayName": semester.displayName
-        }, 201
-    except Exception as err:
-        return str(err), 400
 
 
 @app.route("/evaluation", methods = ["POST"])

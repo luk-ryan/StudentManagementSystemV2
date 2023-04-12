@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course, Evaluation, Semester
+from backend.models import Student, Course, Evaluation, Semester, Event
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 
@@ -163,6 +163,7 @@ def course_post():
     '''
     Adding Course
     '''
+
     course_code = request.form["course code"]
     course_name = request.form["course name"]
     course_credits = request.form["credits"]
@@ -205,20 +206,15 @@ def course_get_by_id(id):
 
     course = Course.getCourseById(id)
     evaluations = Evaluation.getEvaluations(course._id)
+    events = Event.getEventByCourseId(course._id)
 
-    if (len(evaluations) > 0):
-        return render_template(
-            'course.html',
-            course = course,
-            student = session["NAME"],
-            evaluations = evaluations
-        )
-    else:
-        return render_template (
-            'course.html',
-            course = course,
-            student = session["NAME"]
-        )
+    return render_template(
+        'course.html',
+        course = course,
+        student = session["NAME"],
+        evaluations = evaluations,
+        events = events
+    )
 
 
 @app.route("/course/<id>", methods = ["DELETE"])
@@ -255,6 +251,29 @@ def evaluation_post():
         "evaluation_weight": evaluation.weight
     }, 201
 
+
+@app.route("/event", methods = ["POST"])
+def event_post():
+
+    '''
+    Adding event
+    '''
+
+    request.get_data()
+
+    event_name = request.form["name"]
+    event_category = request.form["category"]
+    event_start_date = request.form["start_date"]
+    event_end_date = request.form["end_date"]
+    event_start_time = request.form["start_time"]
+    event_end_time = request.form["end_time"]
+    course_id = request.form["course_id"]
+    
+    print(f"{event_name}, {event_category}, {event_start_date}, {event_end_date}, {course_id}")
+
+    event = Course.addEvent(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, course_id)
+    return redirect(url_for("course_get_by_id", id = course_id))
+    
 
 @app.route("/profile", methods = ["GET"])
 def profile_get():

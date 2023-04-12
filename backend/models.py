@@ -255,6 +255,16 @@ class Course(db.Model):
         return evaluation
 
 
+    def addEvent(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, course_id):
+
+        event = Event(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, Course.getCourseById(course_id).student._id,course_id)
+
+        db.session.add(event)
+        db.session.commit()
+        
+        return event
+
+
 
 class Evaluation(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
@@ -294,31 +304,53 @@ class Semester(db.Model):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
         return Semester.query.filter_by(studentId = student_id)
-    
+ 
 
 
-class Event (db.Model):
+class Event(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     name = db.Column(db.String(20), nullable = False)
     category = db.Column(db.String(20), nullable = False)
-    startTime = db.Column(db.DateTime, nullable = False)
-    endTime = db.Column(db.DateTime, nullable = False)
+    startDate = db.Column(db.Date, nullable = False)
+    endDate = db.Column(db.Date, nullable = False)
+    startTime = db.Column(db.Time, nullable = False)
+    endTime = db.Column(db.Time, nullable = False)
     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
 
     # constructor without course reference
-    def __init__(self, name, category, startTime, endTime, studentId):
+    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId):
         self.name = name
         self.category = category
+        self.startDate = startDate
+        self.endDate = endDate
         self.startTime = startTime
         self.endTime = endTime
         self.studentId = studentId
 
     # constructor with course reference
-    def __init__(self, name, category, startTime, endTime, studentId, courseId):
+    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId, courseId):
         self.name = name
         self.category = category
+        self.startDate = startDate
+        self.endDate = endDate
         self.startTime = startTime
         self.endTime = endTime
         self.studentId = studentId
         self.courseId = courseId
+
+    def getEventByCourseId(course_id):
+        return Event.query.filter_by(courseId = course_id)
+
+
+
+# class CourseEvent(db.model):
+#     _id = db.Column("id", db.Integer, primary_key = True)
+#     name = db.Column(db.String(20), nullable = False)
+#     category = db.Column(db.String(20), nullable = False)
+#     startDate = 
+#     endDate = 
+#     startTime = db.Column(db.Time, nullable = False)
+#     endTime = db.Column(db.Time, nullable = False)
+#     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
+#     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)

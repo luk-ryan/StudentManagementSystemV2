@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course, Evaluation, Semester, Event, CourseEvent
+from backend.models import Student, Course, Evaluation, Semester, Event, Course_event
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 
@@ -207,13 +207,15 @@ def course_get_by_id(id):
     course = Course.getCourseById(id)
     evaluations = Evaluation.getEvaluations(course._id)
     events = Event.getEventByCourseId(course._id)
+    courseEvents = Course_event.getCourseEventByCourseId(course._id)
 
     return render_template(
         'course.html',
         course = course,
         student = session["NAME"],
         evaluations = evaluations,
-        events = events
+        events = events,
+        courseEvents = courseEvents
     )
 
 
@@ -269,9 +271,29 @@ def event_post():
     event_end_time = request.form["end_time"]
     course_id = request.form["course_id"]
     
-    print(f"{event_name}, {event_category}, {event_start_date}, {event_end_date}, {course_id}")
-
     event = Course.addEvent(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, course_id)
+    return redirect(url_for("course_get_by_id", id = course_id))
+    
+    
+@app.route("/courseEvent", methods = ["POST"])
+def course_event_post():
+    
+    '''
+    Adding course event
+    '''
+
+    request.get_data()
+
+    course_event_name = request.form["name"]
+    course_event_category = request.form["category"]
+    course_event_day = request.form["day"]
+    course_event_start_time = request.form["start_time"]
+    course_event_end_time = request.form["end_time"]
+    course_id = request.form["course_id"]
+    
+    print(f"{course_event_name}, {course_event_category}, {course_event_day}, {course_event_start_time}, {course_event_end_time}, {course_id}")
+
+    courseEvent = Course.addCourseEvent(course_event_name, course_event_category, course_event_day, course_event_start_time, course_event_end_time, course_id)
     return redirect(url_for("course_get_by_id", id = course_id))
     
 

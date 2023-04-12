@@ -315,6 +315,7 @@ class Event(db.Model):
     endDate = db.Column(db.Date, nullable = False)
     startTime = db.Column(db.Time, nullable = False)
     endTime = db.Column(db.Time, nullable = False)
+    courseEventId = db.column(db.Integer, db.ForeignKey("courseEvent.id"))
     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
 
@@ -339,18 +340,58 @@ class Event(db.Model):
         self.studentId = studentId
         self.courseId = courseId
 
+    # constructor with course reference AND courseEvent Reference
+    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId, courseId, courseEventId):
+        self.name = name
+        self.category = category
+        self.startDate = startDate
+        self.endDate = endDate
+        self.startTime = startTime
+        self.endTime = endTime
+        self.studentId = studentId
+        self.courseId = courseId
+        self.courseEventId = courseEventId
+        
+        
     def getEventByCourseId(course_id):
         return Event.query.filter_by(courseId = course_id)
 
 
 
-# class CourseEvent(db.model):
-#     _id = db.Column("id", db.Integer, primary_key = True)
-#     name = db.Column(db.String(20), nullable = False)
-#     category = db.Column(db.String(20), nullable = False)
-#     startDate = 
-#     endDate = 
-#     startTime = db.Column(db.Time, nullable = False)
-#     endTime = db.Column(db.Time, nullable = False)
-#     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
-#     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+class CourseEvent(db.Model):
+    _id = db.Column("id", db.Integer, primary_key = True)
+    name = db.Column(db.String(20), nullable = False)
+    category = db.Column(db.String(20), nullable = False)
+    dayNumber = db.Column(db.Integer, nullable = False)
+    dayName = db.Column(db.String(20), nullable = False)
+    startTime = db.Column(db.Time, nullable = False)
+    endTime = db.Column(db.Time, nullable = False)
+    courseId = db.Column(db.Integer, db.ForeignKey("course.id"), nullable = False)
+    studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
+    events = db.relationship("Event", backref = "courseEvent")
+    
+    def __init__(self, name, category, dayNumber, startTime, endTime, studentId, courseId):
+        self.name = name
+        self.category = category
+        self.dayNumber = dayNumber
+        self.dayName = setDayName(dayNumber)
+        self.startTime = startTime
+        self.endTime = endTime
+        self.studentId = studentId
+        self.courseId = courseId
+        
+    def setDayName(dayNum):
+        if(dayNum == 1):
+            return "Monday"
+        elif(dayNum == 2):
+            return "Tuesday"
+        elif(dayNum == 3):
+            return "Wednesday"
+        elif(dayNum == 4):
+            return "Thursday"
+        elif(dayNum == 5):
+            return "Friday"
+        elif(dayNum == 6):
+            return "Saturday"
+        else:
+            return "Sunday"

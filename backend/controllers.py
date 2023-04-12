@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course, Evaluation, Semester, Event
+from backend.models import Student, Course, Evaluation, Semester, Event, CourseEvent
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 

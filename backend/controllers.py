@@ -173,18 +173,6 @@ def course_post():
     return redirect(url_for("course_get"))
 
 
-@app.route("/course/<id>", methods = ["DELETE"])
-def course_delete(id):
-
-    '''
-    Deleting course
-    '''
-
-    Student.removeCourse(request.view_args["id"])
-
-    return "success"
-
-
 @app.route("/semester", methods = ["POST"])
 def semester_post():
 
@@ -231,6 +219,18 @@ def course_get_by_id(id):
             course = course,
             student = session["NAME"]
         )
+
+
+@app.route("/course/<id>", methods = ["DELETE"])
+def course_delete(id):
+
+    '''
+    Deleting course
+    '''
+
+    Student.removeCourse(request.view_args["id"])
+
+    return "success"
 
 
 @app.route("/evaluation", methods = ["POST"])

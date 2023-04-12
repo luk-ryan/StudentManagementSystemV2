@@ -300,21 +300,24 @@ class Semester(db.Model):
 class Event (db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
     name = db.Column(db.String(20), nullable = False)
+    category = db.Column(db.String(20), nullable = False)
     startTime = db.Column(db.DateTime, nullable = False)
     endTime = db.Column(db.DateTime, nullable = False)
     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
 
     # constructor without course reference
-    def __init__(self, name, startTime, endTime, studentId):
+    def __init__(self, name, category, startTime, endTime, studentId):
         self.name = name
+        self.category = category
         self.startTime = startTime
         self.endTime = endTime
         self.studentId = studentId
 
     # constructor with course reference
-    def __init__(self, name, startTime, endTime, studentId, courseId):
+    def __init__(self, name, category, startTime, endTime, studentId, courseId):
         self.name = name
+        self.category = category
         self.startTime = startTime
         self.endTime = endTime
         self.studentId = studentId

@@ -149,6 +149,8 @@ class Student(db.Model):
 
 
     def addSemester(display_name, start_date, end_date, student_email):
+        if not display_name or not start_date or not end_date:
+            raise Exception("Display name, start date, and end date are all required!")
 
         if end_date < start_date:
             raise Exception("Start date must be before the end date!")

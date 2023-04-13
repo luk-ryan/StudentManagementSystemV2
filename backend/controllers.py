@@ -291,8 +291,6 @@ def course_event_post():
     course_event_end_time = request.form["end_time"]
     course_id = request.form["course_id"]
     
-    print(f"{course_event_name}, {course_event_category}, {course_event_day}, {course_event_start_time}, {course_event_end_time}, {course_id}")
-
     courseEvent = Course.addCourseEvent(course_event_name, course_event_category, course_event_day, course_event_start_time, course_event_end_time, course_id)
     return redirect(url_for("course_get_by_id", id = course_id))
     

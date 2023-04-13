@@ -259,7 +259,16 @@ class Course(db.Model):
 
     def addEvent(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, course_id):
 
-        event = Event(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, Course.getCourseById(course_id).student._id, course_id)
+        event = Event (
+            name = event_name,
+            category = event_category, 
+            startDate = event_start_date, 
+            endDate = event_end_date, 
+            startTime = event_start_time, 
+            endTime = event_end_time, 
+            studentId = Course.getCourseById(course_id).student._id, 
+            courseId = course_id
+        )
 
         db.session.add(event)
         db.session.commit()
@@ -269,7 +278,37 @@ class Course(db.Model):
     
     def addCourseEvent(course_event_name, course_event_category, course_event_day, course_event_start_time, course_event_end_time, course_id):
 
-        courseEvent = Course_event(course_event_name, course_event_category, course_event_day, course_event_start_time, course_event_end_time, Course.getCourseById(course_id).student._id, course_id)
+        semester = Semester.query.filter_by(_id = Course.query.filter_by(_id = course_id).first().semester._id).first()
+
+        courseEvent = Course_event (
+            name = course_event_name,
+            category = course_event_category, 
+            dayName = course_event_day, 
+            startTime = course_event_start_time, 
+            endTime = course_event_end_time, 
+            studentId = Course.getCourseById(course_id).student._id, 
+            courseId = course_id
+        )
+        
+        date = semester.startDate
+        delta = datetime.timedelta(days=1)
+        while date <= semester.endDate:
+            if date.weekday() == courseEvent.dayNumber:
+                db.session.add ( 
+                    Event (
+                        name = course_event_name,
+                        category = course_event_category,
+                        startDate = date, 
+                        endDate = date, 
+                        startTime = course_event_start_time, 
+                        endTime = course_event_end_time, 
+                        studentId = Course.getCourseById(course_id).student._id, 
+                        courseId = course_id,
+                        course_eventId = courseEvent._id
+                    )
+                )
+                
+            date += delta
         
         db.session.add(courseEvent)
         db.session.commit()
@@ -311,6 +350,7 @@ class Semester(db.Model):
         self.endDate = endDate
         self.studentId = studentId
 
+
     def getSemesters(student_email):
         student_id = Student.query.filter_by(email = student_email).first()._id
 
@@ -320,8 +360,8 @@ class Semester(db.Model):
 
 class Event(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
-    name = db.Column(db.String(20), nullable = False)
-    category = db.Column(db.String(20), nullable = False)
+    name = db.Column(db.String(50), nullable = False)
+    category = db.Column(db.String(50), nullable = False)
     startDate = db.Column(db.Date, nullable = False)
     endDate = db.Column(db.Date, nullable = False)
     startTime = db.Column(db.Time, nullable = False)
@@ -330,29 +370,8 @@ class Event(db.Model):
     courseId = db.Column(db.Integer, db.ForeignKey("course.id"))
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
 
-    # constructor without course reference
-    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId):
-        self.name = name
-        self.category = category
-        self.startDate = startDate
-        self.endDate = endDate
-        self.startTime = startTime
-        self.endTime = endTime
-        self.studentId = studentId
 
-    # constructor with course reference
-    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId, courseId):
-        self.name = name
-        self.category = category
-        self.startDate = startDate
-        self.endDate = endDate
-        self.startTime = startTime
-        self.endTime = endTime
-        self.studentId = studentId
-        self.courseId = courseId
-
-    # constructor with course reference AND course_event Reference
-    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId, courseId, course_eventId):
+    def __init__(self, name, category, startDate, endDate, startTime, endTime, studentId, courseId = None, course_eventId = None):
         self.name = name
         self.category = category
         self.startDate = startDate
@@ -371,7 +390,7 @@ class Event(db.Model):
 
 class Course_event(db.Model):
     _id = db.Column("id", db.Integer, primary_key = True)
-    name = db.Column(db.String(20), nullable = False)
+    name = db.Column(db.String(50), nullable = False)
     category = db.Column(db.String(20), nullable = False)
     dayNumber = db.Column(db.Integer, nullable = False)
     dayName = db.Column(db.String(20), nullable = False)
@@ -380,6 +399,7 @@ class Course_event(db.Model):
     courseId = db.Column(db.Integer, db.ForeignKey("course.id"), nullable = False)
     studentId = db.Column(db.Integer, db.ForeignKey("student.id"), nullable = False)
     events = db.relationship("Event", backref = "course_event")
+    
     
     def __init__(self, name, category, dayName, startTime, endTime, studentId, courseId):
         self.name = name
@@ -391,21 +411,22 @@ class Course_event(db.Model):
         self.studentId = studentId
         self.courseId = courseId
         
+        
     def setDayNumber(name):
         if(name == "Monday"):
-            return 1
+            return 0
         elif(name == "Tuesday"):
-            return 2
+            return 1
         elif(name == "Wednesday"):
-            return 3
+            return 2
         elif(name == "Thursday"):
-            return 4
+            return 3
         elif(name == "Friday"):
-            return 5
+            return 4
         elif(name == "Saturday"):
-            return 6
+            return 5
         else:
-            return 7
+            return 6
         
     def getCourseEventByCourseId(course_id):
         return Course_event.query.filter_by(courseId = course_id)

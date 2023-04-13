@@ -1,7 +1,7 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from backend.models import Student, Course, Evaluation, Semester
+from backend.models import Student, Course, Evaluation, Semester, Event, Course_event
 from werkzeug.utils import secure_filename
 from werkzeug.exceptions import RequestEntityTooLarge
 
@@ -163,6 +163,7 @@ def course_post():
     '''
     Adding Course
     '''
+
     course_code = request.form["course code"]
     course_name = request.form["course name"]
     course_credits = request.form["credits"]
@@ -171,43 +172,6 @@ def course_post():
     Student.addCourse(course_code, course_name, session["EMAIL"], course_credits, course_semesterId)
 
     return redirect(url_for("course_get"))
-
-
-@app.route("/course/<id>", methods = ["DELETE"])
-def course_delete(id):
-
-    '''
-    Deleting course
-    '''
-
-    Student.removeCourse(request.view_args["id"])
-
-    return "success"
-
-
-@app.route("/course/<id>", methods = ["GET"])
-def course_get_by_id(id):
-
-    '''
-    Get course by id
-    '''
-
-    course = Course.getCourseById(id)
-    evaluations = Evaluation.getEvaluations(course._id)
-
-    if (len(evaluations) > 0):
-        return render_template(
-            'course.html',
-            course = course,
-            student = session["NAME"],
-            evaluations = evaluations
-        )
-    else:
-        return render_template (
-            'course.html',
-            course = course,
-            student = session["NAME"]
-        )
 
 
 @app.route("/semester", methods = ["POST"])
@@ -233,6 +197,40 @@ def semester_post():
         return str(err), 400
 
 
+@app.route("/course/<id>", methods = ["GET"])
+def course_get_by_id(id):
+
+    '''
+    Get course by id
+    '''
+
+    course = Course.getCourseById(id)
+    evaluations = Evaluation.getEvaluations(course._id)
+    events = Event.getEventByCourseId(course._id)
+    courseEvents = Course_event.getCourseEventByCourseId(course._id)
+
+    return render_template(
+        'course.html',
+        course = course,
+        student = session["NAME"],
+        evaluations = evaluations,
+        events = events,
+        courseEvents = courseEvents
+    )
+
+
+@app.route("/course/<id>", methods = ["DELETE"])
+def course_delete(id):
+
+    '''
+    Deleting course
+    '''
+
+    Student.removeCourse(request.view_args["id"])
+
+    return "success"
+
+
 @app.route("/evaluation", methods = ["POST"])
 def evaluation_post():
 
@@ -255,6 +253,47 @@ def evaluation_post():
         "evaluation_weight": evaluation.weight
     }, 201
 
+
+@app.route("/event", methods = ["POST"])
+def event_post():
+
+    '''
+    Adding event
+    '''
+
+    request.get_data()
+
+    event_name = request.form["name"]
+    event_category = request.form["category"]
+    event_start_date = request.form["start_date"]
+    event_end_date = request.form["end_date"]
+    event_start_time = request.form["start_time"]
+    event_end_time = request.form["end_time"]
+    course_id = request.form["course_id"]
+    
+    event = Course.addEvent(event_name, event_category, event_start_date, event_end_date, event_start_time, event_end_time, course_id)
+    return redirect(url_for("course_get_by_id", id = course_id))
+    
+    
+@app.route("/courseEvent", methods = ["POST"])
+def course_event_post():
+    
+    '''
+    Adding course event
+    '''
+
+    request.get_data()
+
+    course_event_name = request.form["name"]
+    course_event_category = request.form["category"]
+    course_event_day = request.form["day"]
+    course_event_start_time = request.form["start_time"]
+    course_event_end_time = request.form["end_time"]
+    course_id = request.form["course_id"]
+    
+    courseEvent = Course.addCourseEvent(course_event_name, course_event_category, course_event_day, course_event_start_time, course_event_end_time, course_id)
+    return redirect(url_for("course_get_by_id", id = course_id))
+    
 
 @app.route("/profile", methods = ["GET"])
 def profile_get():

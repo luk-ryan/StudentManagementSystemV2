@@ -1,4 +1,5 @@
 {% extends 'page_template.html' %}
+{% set css_filename = 'course.css' %}
 {% block title %}{{course.code}}{% endblock %}
 {% block content %}
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -9,30 +10,124 @@
         {% endif %}
     {% endwith %}
 
-    <h1><b>{{course.code}}</b> {{course.name}}</h1>
-    <h2>Evaluations</h2>
-        <div>
-            <table id="evaluations-table">
+    <h1><b>{{ course.code }}</b> {{ course.name }}</h1>
+    <div>
+        <h2>Evaluations</h2>
+        <table id="evaluations-table">
+            <tr>
+                <th>Evaluation</th>
+                <th>Grade</th>
+                <th>Weight</th>
+            </tr>
+            {% for evaluation in evaluations %}
                 <tr>
-                    <th>Evaluation</th>
-                    <th>Grade</th>
-                    <th>Weight</th>
+                    <td>{{ evaluation.name }}</td>
+                    <td>{{ evaluation.grade * 100 }} %</td>
+                    <td>{{ evaluation.weight * 100 }} %</td>
                 </tr>
-                {% for evaluation in evaluations %}
-                    <tr>
-                        <td>{{ evaluation.name }}</td>
-                        <td>{{ evaluation.grade * 100 }} %</td>
-                        <td>{{ evaluation.weight * 100 }} %</td>
-                    </tr>
-                {% endfor %}
-                <tr id="evaluation-input-row" style="display: none">
-                    <td><input id="evaluation_name" placeholder="Name"></td>
-                    <td><input id="evaluation_grade" placeholder="Grade"></td>
-                    <td><input id="evaluation_weight" placeholder="Weight"></td>
+            {% endfor %}
+            <tr id="evaluation-input-row" style="display: none">
+                <td><input id="evaluation_name" placeholder="Name"></td>
+                <td><input id="evaluation_grade" placeholder="Grade"></td>
+                <td><input id="evaluation_weight" placeholder="Weight"></td>
+            </tr>
+        </table>
+        <button id="add-evaluation-button" style="display: none" onclick="addEvaluation( '{{ course._id }}' )">Add</button>
+        <button id="show-evaluation-button" onclick="showEvaluationInputRow()">+</button>
+    </div>
+    <div>
+        <h2>Course Info</h2>
+
+        {% for courseEvent in courseEvents %}
+            <li> {{ courseEvent.name }}  {{ courseEvent.category }}  {{ courseEvent.dayName }}  {{ courseEvent.startTime }}  {{ courseEvent.endTime }}</li>
+        {% endfor %}
+
+    </div>
+    <div>
+        <h3>Temporary Add Course Event Form</h3>
+        <form action="/courseEvent" method="post">
+            <input type="text" name="name" placeholder="event">
+            <br>
+            <select id="category-select-dropdown" name="category">
+                <option value="" selected disabled hidden>Choose Type</option>
+                <option value="Lecture">Lecture</option>
+                <option value="Lab">Lab</option>
+                <option value="Tutorial">Tutorial</option>
+            </select>
+            <br>
+            <select id="day-select-dropdown" name="day">
+                <option value="" selected disabled hidden>Choose Day</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+                <option value="Sunday">Sunday</option>
+            </select>
+            <br>
+            <label for="start_time">Start Time</label>
+            <input type="time" name="start_time">
+            <br>
+            <label for="end_time">End Time</label>
+            <input type="time" name="end_time">
+            <br>
+            <input type="hidden" name="course_id" value="{{ course._id }}">
+            <button type="submit">Add Class</button>
+        </form>
+    </div>
+    <div>
+        <h2>Events</h2>
+        <table id="events-table">
+            <tr>
+                <th>Event</th>
+                <th>Category</th>
+                <th>Start</th>
+                <th>End</th>
+            </tr>
+            {% for event in events %}
+                <tr>
+                    <td>{{ event.name }}</td>
+                    <td>{{ event.category }}</td>
+                    <td>|{{ event.startDate }} @{{ event.startTime }}| </td>
+                    <td>|{{ event.endDate }} @{{ event.endTime }}| </td>
                 </tr>
-            </table>
-            <button id="add-evaluation-button" style="display: none" onclick="addEvaluation( '{{ course._id }}' )">Add</button>
-            <button id="show-evaluation-button" onclick="showEvaluationInputRow()">+</button>
+            {% endfor %}
+        </table>
+        <button id="add-event-button" onclick="openAddEventModal()">Add Event</button>
+    </div>
+    
+    <div id="event-add-modal">
+        <div>
+            <div>
+                <span onclick="closeAddEventModal()">&times;</span>
+                <h2>Add Event</h2>
+            </div>
+            <div id="event-add-modal-message" class="flash-message error"></div>
+            <form action="/event" method="post">
+                <input type="text" name="name" placeholder="event">
+                <br>
+                <input type="text" name="category" placeholder="category" list="category-list">
+                <datalist id="category-list">
+                    <option value="Lecture">Lecture</option>
+                    <option value="Lab">Lab</option>
+                    <option value="Tutorial">Tutorial</option>
+                </datalist>
+                <br>
+                <label for="start_date">Start</label>
+                <input type="date" name="start_date">
+                <input type="time" name="start_time">
+                <br>
+                <label for="end_date">End</label>
+                <input type="date" name="end_date">
+                <input type="time" name="end_time">
+                <br>
+                <input type="hidden" name="course_id" value="{{ course._id }}">
+                <button id="submit-modal-button" type="submit">Add Event</button>
+            </form>
         </div>
+    </div>
+    
     <script src="/static/js/evaluation.js"></script>
+    <script src="/static/js/event.js"></script>
 {% endblock content %}

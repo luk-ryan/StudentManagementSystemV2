@@ -1,0 +1,104 @@
+
+/*
+ * Event Add Modal Styles
+ */
+
+ #event-add-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+#event-add-modal > div {
+    position: relative;
+    margin: auto;
+    width: 80%;
+    border-radius: 5px;
+    background-color: var(--background-color);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
+}
+
+#event-add-modal h2 {
+    text-align: center;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+}
+
+#event-add-modal span {
+    color: var(--accent-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#event-add-modal span:hover {
+    filter: brightness(1.3);
+}
+
+#event-add-modal-message {
+    display: none;
+    margin: auto;
+    width: 80%;
+}
+
+#event-add-modal form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#event-add-modal input {
+    width: 75%;
+    height: 50px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-family: var(--paragraph-font-family);
+    font-size: var(--paragraph-font-size);
+}
+
+#event-add-modal input:first-child {
+    margin-top: 20px;
+}
+
+#submit-modal-button {
+    display: block;
+    width: 100%;
+    border: none;
+    text-align: center;
+    background-color: var(--accent-color);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: var(--text-color);
+    font-size: var(--subheading-font-size);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#course-add-modal #submit-modal-button {
+    padding: 15px;
+}
+
+#semester-add-modal #submit-modal-button {
+    padding: 10px;
+}
+
+#submit-modal-button:hover {
+    filter: brightness(1.3);
+}

@@ -102,3 +102,36 @@
 #submit-modal-button:hover {
     filter: brightness(1.3);
 }
+
+.cards {
+    display: grid;
+    grid-template-areas:
+        'evaluations course-info'
+        'course-events course-events';
+    grid-template-columns: 1fr 1fr;
+    column-gap: 15px;
+    row-gap: 15px;
+    padding: 10px;
+}
+
+.cards > div {
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 8px;
+    padding: 5px;
+}
+
+.cards h2 {
+    margin: 0;
+}
+
+#evaluations-card {
+    grid-area: evaluations;
+}
+
+#course-info-card {
+    grid-area: course-info;
+}
+
+#course-events-card {
+    grid-area: course-events;
+}

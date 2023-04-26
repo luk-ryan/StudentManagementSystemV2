@@ -380,3 +380,110 @@ div.base-form button:hover {
     filter: brightness(1.3);
     cursor: pointer;
 }
+
+/* ----- Modal ----- */
+
+.modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal > div {
+    width: 80%;
+    border-radius: 5px;
+    background-color: var(--background-color);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 12px 40px 0 rgba(0,0,0,0.19);
+}
+
+.modal header {
+    position: relative;
+}
+
+.modal header > h2 {
+    text-align: center;
+    margin: 0;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: var(--main-color);
+    color: var(--accent-color);
+    font-size: var(--subheading-font-size);
+}
+
+.modal header > span {
+    position: absolute;
+    right: 0;
+    color: var(--accent-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.modal span:hover {
+    filter: brightness(1.3);
+}
+
+.modal .flash-message {
+    display: none;
+    margin: auto;
+    width: 80%;
+}
+
+.modal form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+.modal input {
+    width: 75%;
+    height: 50px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-family: var(--paragraph-font-family);
+    font-size: var(--paragraph-font-size);
+}
+
+.modal input:first-child {
+    margin-top: 20px;
+}
+
+.modal footer {
+    width: 100%;
+}
+
+.modal footer button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    text-align: center;
+    background-color: var(--accent-color);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: var(--text-color);
+    font-size: var(--subheading-font-size);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal footer button:hover {
+    filter: brightness(1.3);
+}

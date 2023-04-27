@@ -52,14 +52,14 @@
             </div>
         </div>
     {% endif %}    
-    <div id="course-add-modal">
-        <div>
-            <div>
+    <div class="modal" id="course-add-modal">
+        <form action="/course" method="post">
+            <header>
                 <span onclick="closeAddCourseModal()">&times;</span>
                 <h2>Add New Course</h2>
-            </div>
-            <div id="course-add-modal-message" class="flash-message success"></div>
-            <form action="/course" method="post">
+            </header>
+            <section action="/course" method="post">
+                <div class="flash-message success"></div>
                 <input type="text" name="course code" placeholder="Course Code">
                 <br>
                 <input type="text" name="course name" placeholder="Course Name">
@@ -74,10 +74,11 @@
                 <button class="icon-button" type="button" onclick="openAddSemesterModal()">
                     <img src="static/svg/plus.svg">
                 </button>
-                <br>
-                <button id="submit-modal-button" type="submit">Add Course</button>
-            </form>
-        </div>
+            </section>
+            <footer>
+                <button type="submit">Add Course</button>
+            </footer>
+        </form>
     </div>
 
     <div id="semester-add-modal">

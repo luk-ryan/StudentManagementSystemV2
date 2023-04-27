@@ -3,7 +3,7 @@
  */
 function openAddEventModal() {
     const addEventModal = document.getElementById("event-add-modal");
-    addEventModal.style.display = "block";
+    addEventModal.style.display = "flex";
 }
 
 /**

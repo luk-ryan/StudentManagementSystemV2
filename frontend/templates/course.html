@@ -96,15 +96,15 @@
         </table>
         <button id="add-event-button" onclick="openAddEventModal()">Add Event</button>
     </div>
-    
-    <div id="event-add-modal">
-        <div>
-            <div>
+
+    <div class="modal" id="event-add-modal">
+        <form action="/event" method="post">
+            <header>
                 <span onclick="closeAddEventModal()">&times;</span>
                 <h2>Add Event</h2>
-            </div>
-            <div id="event-add-modal-message" class="flash-message error"></div>
-            <form action="/event" method="post">
+            </header>
+            <section>
+                <div id="event-add-modal-message" class="flash-message error"></div>
                 <input type="text" name="name" placeholder="event">
                 <br>
                 <input type="text" name="category" placeholder="category" list="category-list">
@@ -123,11 +123,13 @@
                 <input type="time" name="end_time">
                 <br>
                 <input type="hidden" name="course_id" value="{{ course._id }}">
+            </section>
+            <footer>
                 <button id="submit-modal-button" type="submit">Add Event</button>
-            </form>
-        </div>
+            </footer>
+        </form>
     </div>
-    
+
     <script src="/static/js/evaluation.js"></script>
     <script src="/static/js/event.js"></script>
 {% endblock content %}

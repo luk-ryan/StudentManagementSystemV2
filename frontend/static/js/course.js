@@ -27,7 +27,7 @@ async function removeCourse(element, id) {
  */
 function openAddCourseModal() {
     const addCourseModal = document.getElementById("course-add-modal");
-    addCourseModal.style.display = "block";
+    addCourseModal.style.display = "flex";
 }
 
 /**
@@ -38,12 +38,12 @@ function closeAddCourseModal() {
     addCourseModal.style.display = "none";
 }
 
-window.onclick = function(event) {
+window.addEventListener("click", function(event) {
     const addCourseModal = document.getElementById("course-add-modal");
     if (event.target == addCourseModal) {
         closeAddCourseModal();
     }
-}
+});
 
 /**
  * Adds Semester to Student account
@@ -93,7 +93,7 @@ async function addSemester() {
  */
 function openAddSemesterModal() {
     const addSemesterModal = document.getElementById("semester-add-modal");
-    addSemesterModal.style.display = "block";
+    addSemesterModal.style.display = "flex";
 }
 
 /**
@@ -104,9 +104,9 @@ function closeAddSemesterModal() {
     addSemesterModal.style.display = "none";
 }
 
-window.onclick = function(event) {
+window.addEventListener("click", function(event) {
     const addSemesterModal = document.getElementById("semester-add-modal");
     if (event.target == addSemesterModal) {
         closeAddSemesterModal();
     }
-}
+});

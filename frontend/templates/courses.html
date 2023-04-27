@@ -53,7 +53,7 @@
         </div>
     {% endif %}    
     <div class="modal" id="course-add-modal">
-        <form>
+        <form action="/course" method="post">
             <header>
                 <span onclick="closeAddCourseModal()">&times;</span>
                 <h2>Add New Course</h2>
@@ -76,7 +76,7 @@
                 </button>
             </section>
             <footer>
-                <button id="submit-modal-button" type="submit">Add Course</button>
+                <button type="submit">Add Course</button>
             </footer>
         </form>
     </div>
